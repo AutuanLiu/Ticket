@@ -6,9 +6,8 @@
 
 //客户信息
 struct user{
- char name[9];//顾客名//管理员
+ char name[9];//顾客名
  char ps[6]; //password
- int flag;  //flag=1或0分别为管理员和普通用户
  char line_num[8];//航班号
  int seat_num;//座位号
  char ID[20];
