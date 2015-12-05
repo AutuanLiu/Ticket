@@ -1,4 +1,4 @@
-#include "adt.h"
+ï»¿#include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
@@ -43,7 +43,7 @@ Date convert2Date(char *d)
 }
 
 
-Pairl init()    //Á´±í³õÊ¼»¯
+Pairl init()    //é“¾è¡¨åˆå§‹åŒ–
 {
     Pairl pnew = (Pairl)malloc(sizeof(airl));
     if(pnew != NULL)
@@ -51,7 +51,7 @@ Pairl init()    //Á´±í³õÊ¼»¯
     return pnew;
 }
 
-int addPlane(Pairl head, char (*plane)[100])        //Ìí¼Óº½°à
+int addPlane(Pairl head, char (*plane)[100])        //æ·»åŠ èˆªç­
 {
     Pairl pnew = init();
     if(pnew == NULL)
@@ -70,7 +70,7 @@ int addPlane(Pairl head, char (*plane)[100])        //Ìí¼Óº½°à
     return 1;
 }
 
-Pairl createplaneList(FILE *pf)         //´ÓÎÄ¼şÌí¼ÓËùÓĞº½°à
+Pairl createplaneList(FILE *pf)         //ä»æ–‡ä»¶æ·»åŠ æ‰€æœ‰èˆªç­
 {
     Pairl head = init();
     if(head == NULL)
@@ -197,7 +197,7 @@ int main()
 
     Pairl p = createplaneList(pf);
     Pairl parr[9];
-    char options[4][100] = {"´óÚæ"};
+    char options[4][100] = {"å¤§é˜ª"};
     int pos = search(p, parr, options, 0,0,0);
     int i;
     for(i = 0; i < pos; i++)

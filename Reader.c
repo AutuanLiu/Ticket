@@ -1,8 +1,8 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int getline(char *pLine, size_t s, FILE *pf)        //´ÓÎÄ¼şµ±Ç°¹â±ê¿ªÊ¼¶ÁÈëÒ»ĞĞ£¬Óöµ½ÎÄ¼ş½áÎ²·µ»ØEOF
+int getline(char *pLine, size_t s, FILE *pf)        //ä»æ–‡ä»¶å½“å‰å…‰æ ‡å¼€å§‹è¯»å…¥ä¸€è¡Œï¼Œé‡åˆ°æ–‡ä»¶ç»“å°¾è¿”å›EOF
 {
     char c;
     int pos = 0;
@@ -18,7 +18,7 @@ int getline(char *pLine, size_t s, FILE *pf)        //´ÓÎÄ¼şµ±Ç°¹â±ê¿ªÊ¼¶ÁÈëÒ»ĞĞ
         return 1;
 }
 
-int read(char (*pInfo)[100], size_t s, FILE *pf)        //1.µ÷ÓÃgetline½«ÎÄ¼şÖĞÒ»ĞĞ¶ÁÈë£¬Í¨¹ı¶ººÅ·Ö¸ô·û½«·Ö¸ô¿ªµÄ×Ö·û´®·Åµ½infoÖĞ
+int read(char (*pInfo)[100], size_t s, FILE *pf)        //1.è°ƒç”¨getlineå°†æ–‡ä»¶ä¸­ä¸€è¡Œè¯»å…¥ï¼Œé€šè¿‡é€—å·åˆ†éš”ç¬¦å°†åˆ†éš”å¼€çš„å­—ç¬¦ä¸²æ”¾åˆ°infoä¸­
 {
     char str[100];
     int pos = 0;
