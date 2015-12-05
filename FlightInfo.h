@@ -1,4 +1,4 @@
-#define PLANE_COUNT 9
+﻿#define PLANE_COUNT 9
 #define COUNT 11
 Pairl init();
 int addPlane(Pairl head, char (*plane)[100]);
