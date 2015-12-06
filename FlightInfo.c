@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <memory.h>
 #include "FlightInfo.h"
-
+char flightPrintInfo[COUNT][100];
+void flightSort(Pairl *arr, int lo, int hi, int d);
 int read(char (*pInfo)[100], size_t s, FILE *pf);
 int getline(char *pLine, size_t s, FILE *pf);
 int equals(char *a, char *b);
@@ -93,7 +94,7 @@ int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice,  int isDi
 
             Date flightStartDate = convert2Date(head->start_time);
             Date flightEndDate = convert2Date(head->end_time);
-            if(options[1][0]!="\0" && options[2][0]!='\0')
+            if(options[1][0]!='\0' && options[2][0]!='\0')
             {
                 Date userStartDate = convert2Date(options[1]);
                 Date userEndDate = convert2Date(options[2]);
