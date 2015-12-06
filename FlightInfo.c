@@ -189,16 +189,16 @@ int equals(char *a, char *b)
     else
         return 0;
 }
-
+//unit test
 int main()
 {
 
-    FILE *pf = fopen("F:/flight_info.csv","r");
+    FILE *pf = fopen("flight_info.csv","r");
 
     Pairl p = createplaneList(pf);
     Pairl parr[9];
-    char options[4][100] = {"大阪"};
-    int pos = search(p, parr, options, 0,0,0);
+    char options[3][100] = {"大阪","8:00", "13:00"};	//1.目的地 2.最早时间 3.最晚时间
+    int pos = search(p, parr, options, 0,0,0); 
     int i;
     for(i = 0; i < pos; i++)
         printf("%s\n",parr[i]->line_num);
