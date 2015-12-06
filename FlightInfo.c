@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <memory.h>
 #include "FlightInfo.h"
-
+char flightPrintInfo[COUNT][100];
+void flightSort(Pairl *arr, int lo, int hi, int d);
 int read(char (*pInfo)[100], size_t s, FILE *pf);
 int getline(char *pLine, size_t s, FILE *pf);
 int equals(char *a, char *b);
@@ -93,7 +94,7 @@ int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice,  int isDi
 
             Date flightStartDate = convert2Date(head->start_time);
             Date flightEndDate = convert2Date(head->end_time);
-            if(options[1][0]!="\0" && options[2][0]!='\0')
+            if(options[1][0]!='\0' && options[2][0]!='\0')
             {
                 Date userStartDate = convert2Date(options[1]);
                 Date userEndDate = convert2Date(options[2]);
@@ -189,16 +190,16 @@ int equals(char *a, char *b)
     else
         return 0;
 }
-
+//unit test
 int main()
 {
 
-    FILE *pf = fopen("F:/flight_info.csv","r");
+    FILE *pf = fopen("flight_info.csv","r");
 
     Pairl p = createplaneList(pf);
     Pairl parr[9];
-    char options[4][100] = {"大阪"};
-    int pos = search(p, parr, options, 0,0,0);
+    char options[3][100] = {"大阪","8:00", "13:00"};	//1.目的地 2.最早时间 3.最晚时间
+    int pos = search(p, parr, options, 0,0,0); 
     int i;
     for(i = 0; i < pos; i++)
         printf("%s\n",parr[i]->line_num);
