@@ -43,7 +43,9 @@ int buyTickets()   //买票
                     printf("请输入你要购买航班的对应序号: ");
                     scanf("%d",&number);
                     seatNum=air[number]->total-air[number]->left+1;
-                    printf("购票成功，您购买的机票的座位号为：%d",seatNum);
+                    printf("购票成功，您购买的机票的座位号为：%d\n",seatNum);
+                    //可以输入出当亲航班下的客户名单
+                    //使用字典结构（adt.h内以作定义）
                 }
             }
     }
