@@ -1,15 +1,19 @@
-ï»¿#include <stdio.h>
+//ÎÄ¼ş¶Á¹¦ÄÜ
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
 
-int getline(char *pLine, size_t s, FILE *pf)        //ä»æ–‡ä»¶å½“å‰å…‰æ ‡å¼€å§‹è¯»å…¥ä¸€è¡Œï¼Œé‡åˆ°æ–‡ä»¶ç»“å°¾è¿”å›EOF
+ //´ÓÎÄ¼şµ±Ç°¹â±ê¿ªÊ¼¶ÁÈëÒ»ĞĞ£¬Óöµ½ÎÄ¼ş½áÎ²·µ»ØEOF£¨End Of File Îª-1 £©
+ //¹ØÓÚsize_tÔÚstddef.hÖĞµÄ¶¨Òå
+ //typedef unsigned int size_t
+int getline(char *pLine, size_t s, FILE *pf)
 {
     char c;
     int pos = 0;
     while((c = fgetc(pf)) != EOF && c!= '\n' && pos < s)
     {
         pLine[pos++] = c;
-
     }
     pLine[pos] = '\0';
     if(c == EOF)
@@ -17,15 +21,17 @@ int getline(char *pLine, size_t s, FILE *pf)        //ä»æ–‡ä»¶å½“å‰å…‰æ ‡å¼€å§
     else
         return 1;
 }
-
-int read(char (*pInfo)[100], size_t s, FILE *pf)        //1.è°ƒç”¨getlineå°†æ–‡ä»¶ä¸­ä¸€è¡Œè¯»å…¥ï¼Œé€šè¿‡é€—å·åˆ†éš”ç¬¦å°†åˆ†éš”å¼€çš„å­—ç¬¦ä¸²æ”¾åˆ°infoä¸­
+//¶ÁÈ¡ÎÄ¼ş
+int read(char (*pInfo)[100], size_t s, FILE *pf)
+//µ÷ÓÃgetline½«ÎÄ¼şÖĞÒ»ĞĞ¶ÁÈë£¬Í¨¹ı¶ººÅ·Ö¸ô·û½«·Ö¸ô¿ªµÄ×Ö·û´®·Åµ½pinfoÖĞ
 {
     char str[100];
     int pos = 0;
-
     if(getline(str, 100, pf) == EOF)
         return EOF;
+    //¶¨ÒåÖĞ¶Ï±ê¼Ç
     char *delims = ",";
+    //strtokº¯Êı·µ»Ø×Ö·û´®strÖĞ½ô½Ó¡°£¬¡±µÄ²¿·ÖµÄÖ¸Õë,
     char *result = strtok( str, delims );
     while( result != NULL )
     {
@@ -34,7 +40,8 @@ int read(char (*pInfo)[100], size_t s, FILE *pf)        //1.è°ƒç”¨getlineå°†æ–‡ä
             break;
         result = strtok( NULL, delims );
     }
-
+     //¹Ø±ÕÎÄ¼ş
+    fclose(pf);
     return 1;
 }
 

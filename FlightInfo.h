@@ -1,7 +1,9 @@
-ï»¿#define PLANE_COUNT 9
-#define COUNT 11
-Pairl init();
-int addPlane(Pairl head, char (*plane)[100]);
-Pairl createplaneList(FILE *pf);
-int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice,  int isDiscount, int hasLeft);
-char flightPrintInfo[COUNT][100];
+#define PLANE_COUNT 9 //9ĞĞ
+#define COUNT 11  // 11ÁĞ
+Pairl init();   //º½ÏßĞÅÏ¢³õÊ¼»¯º¯Êı
+int addPlane(Pairl head, char (*plane)[100]); //Ìí¼Óº½Ïßº¯Êı£¬planeÎªÁĞÖ¸Õë
+Pairl createplaneList(FILE *pf);  //´´½¨¹ØÓÚº½ÏßĞÅÏ¢µÄÎÄ¼ş
+//¶Ôº½Ïß½øĞĞËÑË÷
+int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice);
+//¶¨ÒåÈ«¾ÖÍâ²¿±äÁ¿
+extern char flightPrintInfo[COUNT][100];
