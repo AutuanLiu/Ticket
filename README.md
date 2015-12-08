@@ -1,3 +1,11 @@
-﻿# Ticket
-航空售票系统_数据结构课程设计
-2015年11月25日
+# Ticket
+**A system of airplane tickets Selling and Management.** 
+
+##Some specific information needed to add
+
+
+
+
+
+######Date 
+>2015年11月25日
