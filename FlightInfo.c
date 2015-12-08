@@ -10,6 +10,7 @@ void flightSort(Pairl *arr, int lo, int hi, int d);
 int read(char (*pInfo)[100], size_t s, FILE *pf);
 int getline(char *pLine, size_t s, FILE *pf);
 int equals(char *a, char *b);
+//时间结构体
 typedef struct
 {
     int hour;
@@ -62,10 +63,10 @@ int addPlane(Pairl head, char (*plane)[100])        //添加航班
     if(pnew == NULL)
         return 0;
     //赋值
-    strcpy(pnew->line_num, plane[0]);
-    strcpy(pnew->start_time, plane[2]);
-    strcpy(pnew->end_time, plane[3]);
-    strcpy(pnew->destination, plane[4]);
+    strcpy(pnew->line_num,plane[0]);
+    strcpy(pnew->start_time,plane[2]);
+    strcpy(pnew->end_time,plane[3]);
+    strcpy(pnew->destination,plane[4]);
     //将字符串转换为整型
     pnew->price = atoi(plane[7]);
     //将字符串转换为浮点型

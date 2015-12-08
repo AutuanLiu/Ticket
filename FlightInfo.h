@@ -1,5 +1,6 @@
-#define PLANE_COUNT 9 //9行
+#define PLANE_COUNT 100 //100行
 #define COUNT 11  // 11列
+#define MAX 100
 Pairl init();   //航线信息初始化函数
 int addPlane(Pairl head, char (*plane)[100]); //添加航线函数，plane为列指针
 Pairl createplaneList(FILE *pf);  //创建关于航线信息的文件
@@ -7,3 +8,4 @@ Pairl createplaneList(FILE *pf);  //创建关于航线信息的文件
 int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice);
 //定义全局外部变量
 extern char flightPrintInfo[COUNT][100];
+//extern char userhasTicket[MAX][50];

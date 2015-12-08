@@ -1,4 +1,5 @@
 //存储结构文件
+//字典结构存储
 //已购票用户信息
 struct user
 {
@@ -22,7 +23,7 @@ struct airline
     float discount;//折扣
     int total;//座位总数
     int left;//剩余座位
-    Puser guest_info;//已经订票的客户信息
+    user *guest_info;//已经订票的客户信息
     struct airline *next;//下一个结点
 };
 typedef struct airline airl,*Pairl;

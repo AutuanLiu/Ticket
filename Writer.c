@@ -1,15 +1,17 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <stddef.h>
-//写入一行
-//功能待完善
-writefile(char *str)
+//写入客户买票信息
+int writefile(char *str)
 {
-    char c;
     FILE *fout;
-    if((fout=fopen("guest_info.csv","w"))==NULL)
+    fout=fopen("guest_info.csv","ab");
+    //在末尾追加
+    if(fout==NULL)
         perror("guest_info.csv");
-    while((c=fgetc(fout))!=EOF&&c== '\n')
+    else
         fprintf(fout,"%s",str);
+    fclose(fout);
+    return 1;
 }
+//从客户信息读入文件信息
+

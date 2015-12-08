@@ -41,7 +41,7 @@ int read(char (*pInfo)[100], size_t s, FILE *pf)
         result = strtok( NULL, delims );
     }
      //╧ь╠унд╪Ч
-    fclose(pf);
+   // fclose(pf);
     return 1;
 }
 
