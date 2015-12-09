@@ -2,9 +2,10 @@
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "FlightInfo.h"
+#include "PublicInfo.h"
 int main()
 {
+    printf("\n\t**********        欢迎进入广州白云机场服务系统  \t*********\n\n");
     printf("\t\t***************       菜单     ***************\n\n");
 	printf("\t\t*************** 1   购买机票   ***************\n");
 	printf("\t\t*************** 2 查询已购机票 ***************\n");
@@ -12,11 +13,14 @@ int main()
 	printf("\t\t*************** 4 查询已卖机票 ***************\n");
 	printf("\t\t*************** 5     退票     ***************\n");
 	printf("\t\t*************** 6 整理当前屏幕 ***************\n");
-    printf("\t\t*************** 7   退出系统   ***************\n");
+	printf("\t\t*************** 7  增加新航班  ***************\n");
+	printf("\t\t*************** 8 查看所有航班 ***************\n");
+	printf("\t\t*************** 9 查看航班乘客 ***************\n");
+    printf("\t\t*************** 10   退出系统   ***************\n");
     int choice;
 	while(choice)
  {
-	printf("请输入你要进行操作所对应的序号：(1~7) ");
+	printf("请输入你要进行操作所对应的序号：(1~10) ");
 	scanf("%d",&choice);
 	switch(choice)
 	{
@@ -27,10 +31,10 @@ int main()
             }
         case 2:
             {
-                char id[20];
-                printf("请输入您的证件号： ");
-                scanf("%s",id);
-                query(id);
+                char name[20];
+                printf("请输入您的姓名： ");
+                scanf("%s",name);
+                query(name);
                 break;
             }
         case 3:
@@ -43,15 +47,16 @@ int main()
             }
         case 4:
             {
+                printf("所有顾客信息如下：\n");
                 selled();
                 break;
             }
         case 5:
             {
-                char planeNum[20];
-                printf("请输入航班号： ");
-                scanf("%s",planeNum);
-                airInfo(planeNum);
+                char name[20];
+                printf("请输入姓名： ");
+                scanf("%s",name);
+                refund(name);
                 break;
             }
         case 6:
@@ -61,6 +66,37 @@ int main()
               break;
             }
         case 7:
+            {
+              char s1[500],s[500];
+              printf("请输入航班号: ");
+              scanf("%s",s1);
+              if(isLineExist(s1))
+                printf("对不起,该航班信息已经存在,请添加其他航班.\n");
+              else
+              {
+                printf("请输入起飞时刻,到达时刻,目的地,飞行时间,机型,票价,折扣,每班载量,剩余载量（以英文','分隔）\n");
+                scanf("%s",s);
+                strcat(s1,",");
+                strcat(s1,"广州,");
+                strcat(s1,s);
+                writefilenew(s1);
+                writefilenew("\n");
+                printf("添加航班成功！\n");
+              }
+              break;
+            }
+        case 8:
+            {
+               printf("所有的航班信息如下：\n");
+               queryp();
+               break;
+            }
+        case 9:
+            {
+               allguest();
+               break;
+            }
+        case 10:
               exit(0);
     }
  }
