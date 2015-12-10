@@ -31,7 +31,7 @@ void writefilenew(char *str)
 void Pairl2String(Pairl p, char *s)
 {
     s[0] = '\0';
-    //strcat(s,"航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量");
+    p=p->next;
     while(p)
         {
             strcat(s, p->line_num); strcat(s, ",");
@@ -56,28 +56,31 @@ void Pairl2String(Pairl p, char *s)
 
 void writePairl(Pairl p)
 {
-    char s[5000];
+    char s[8000];
     Pairl2String(p, s);
     //若果存在，先删除，在重写
     if(access("flight_info.csv",0)==0)
         remove("flight_info.csv");
     FILE *fp = fopen("flight_info.csv","w");
-    fprintf(fp, "%s", s);
+    fprintf(fp, "%s","航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量\n");
+    fclose(fp);
+    FILE *fp1 = fopen("flight_info.csv","ab");
+    fprintf(fp1, "%s", s);
     fclose(fp);
 }
-
+//
 //乘客信息字符化
 void guest2String(Puser p, char *s)
 {
     s[0] = '\0';
-   // strcat(s,"姓名,ID,目的地,航班号,座位号");
+    p=p->next;
     while(p)
         {
             strcat(s, p->name); strcat(s, ",");
             strcat(s, p->ID); strcat(s, ",");
             strcat(s, p->destination); strcat(s, ",");
             strcat(s, p->line_num); strcat(s, ",");
-            char tmp[200];
+            char tmp[500];
             //发到缓冲区tmp
             sprintf(tmp, "%d", p->seat_num);
             strcat(s, tmp);
@@ -95,6 +98,9 @@ void writeguest(Puser p)
     if(access("guest_info.csv",0)==0)
         remove("guest_info.csv");
     FILE *fp = fopen("guest_info.csv","w");
-    fprintf(fp, "%s", s);
+    fprintf(fp, "%s","姓名,ID,目的地,航班号,座位号\n");
     fclose(fp);
+    FILE *fp1 = fopen("guest_info.csv","ab");
+    fprintf(fp1, "%s", s);
+    fclose(fp1);
 }

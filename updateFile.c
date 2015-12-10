@@ -40,10 +40,6 @@ Pairl updateplane2(char *airlineNum)
 //更新客户信息
 Puser updateguest(char *name)
 {
-    if(!isGuestExist(name))
-        printf("对不起，您还没有订票或订票不成功.\n");
-    else
-    {
         FILE *pf = fopen("guest_info.csv","r");
         if(pf==NULL)
             perror("guest_info.csv");
@@ -52,12 +48,12 @@ Puser updateguest(char *name)
         if(p==NULL)
             printf("创建链表失败\n");
         temp=p;
-        while(!(equals(temp->next->name,name))&&temp->next->next!=NULL)
+        while(temp->next->name==name&&temp->next->next!=NULL)
         {
             q=temp->next;
             temp->next=q->next;
             free(q);
         }
         return p;
-    }
+    fclose(pf);
 }

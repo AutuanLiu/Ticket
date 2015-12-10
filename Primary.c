@@ -74,10 +74,9 @@ int main()
                 printf("对不起,该航班信息已经存在,请添加其他航班.\n");
               else
               {
-                printf("请输入起飞时刻,到达时刻,目的地,飞行时间,机型,票价,折扣,每班载量,剩余载量（以英文','分隔）\n");
+                printf("请输入起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量（以英文','分隔）\n");
                 scanf("%s",s);
                 strcat(s1,",");
-                strcat(s1,"广州,");
                 strcat(s1,s);
                 writefilenew(s1);
                 writefilenew("\n");
@@ -88,6 +87,7 @@ int main()
         case 8:
             {
                printf("所有的航班信息如下：\n");
+               //printf("%s","航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量\n");
                queryp();
                break;
             }

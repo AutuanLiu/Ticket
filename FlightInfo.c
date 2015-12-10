@@ -65,15 +65,15 @@ int addPlane(Pairl head, char (*plane)[100])        //添加航班
         return 0;
     //赋值
     strcpy(pnew->line_num,plane[0]);
-    strcpy(pnew->start_time,plane[2]);
-    strcpy(pnew->end_time,plane[3]);
-    strcpy(pnew->destination,plane[4]);
+    strcpy(pnew->start_time,plane[1]);
+    strcpy(pnew->end_time,plane[2]);
+    strcpy(pnew->destination,plane[3]);
     //将字符串转换为整型
-    pnew->price = atoi(plane[5]);
+    pnew->price = atoi(plane[4]);
     //将字符串转换为浮点型
-    pnew->discount = atof(plane[6]);
-    pnew->total = atoi(plane[7]);
-    pnew->left = atoi(plane[8]);
+    pnew->discount = atof(plane[5]);
+    pnew->total = atoi(plane[6]);
+    pnew->left = atoi(plane[7]);
     pnew->next = head->next;
     head->next = pnew;
     return 1;

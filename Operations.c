@@ -84,18 +84,12 @@ void refund(char *name)
     writePairl(p1);
     p2=updateguest(name);
     writeguest(p2);
-
-
+    printf("退票成功！\n");
 }
 
 //根据姓名查询订票信息
 void query(char *name)
 {
-    if(!isGuestExist(name))
-        printf("对不起，您还没有订票或订票不成功.\n");
-    else
-    {
-        printf("正在为您查找您的订票信息，请稍等...\n");
         FILE *pf = fopen("guest_info.csv","r");
         if(pf==NULL)
             perror("guest_info.csv");
@@ -108,11 +102,15 @@ void query(char *name)
         {
             temp=temp->next;
         }
-        printf("您的机票信息为：\n");
-        printf("姓名,ID,目的地,航班号,座位号\n");
-        printf("%s,%s,%s,%s,%d\n",temp->name,temp->ID,temp->destination,temp->line_num,temp->seat_num);
+        if(temp->next==NULL)
+        printf("对不起，您还没有订票或订票不成功.\n");
+        else
+        {
+            printf("您的机票信息为：\n");
+            printf("姓名,ID,目的地,航班号,座位号\n");
+            printf("%s,%s,%s,%s,%d\n",temp->name,temp->ID,temp->destination,temp->line_num,temp->seat_num);
+        }
     fclose(pf);
-    }
 }
 
 //查询航线信息
@@ -162,28 +160,6 @@ int isLineExist(char *airlineNum)
         return 0;//不存在为 0
     else
     return 1;
-    fclose(pf);
-}
-
-//客户是否存在
-int isGuestExist(char *name)
-{
-    FILE *pf = fopen("guest_info.csv","r");
-    if(pf==NULL)
-        perror("guest_info.csv");
-        //读入信息并创建链表
-    Puser temp,p = createguestList(pf);
-    if(p==NULL)
-        printf("创建链表失败\n");
-    temp=p;
-    while(!(equals(temp->name,name))&&temp->next!=NULL)
-    {
-        temp=temp->next;
-    }
-    if(temp->next==NULL)
-        return 0;//不存在为 0
-    else
-        return 1;
     fclose(pf);
 }
 
