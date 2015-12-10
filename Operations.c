@@ -76,9 +76,10 @@ void refund(char *name)
     Pairl p1;
     Puser p2;
     FILE *pf = fopen("guest_info.csv","r");
-    Puser temp,p = createguestList(pf);
+    Puser temp;
+    Puser p = createguestList(pf);
     temp=p;
-    while(!(equals(temp->name,name))&&temp->next!=NULL)
+    while(temp->name==name&&temp->next!=NULL)
         temp=temp->next;
     p1=updateplane2(temp->line_num);
     writePairl(p1);

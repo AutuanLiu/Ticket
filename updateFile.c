@@ -16,7 +16,7 @@ Pairl updateplane1(char *airlineNum)
     {
         temp=temp->next;
     }
-        --temp->next->left;
+        temp->next->left-=1;
      return p;
 }
 
@@ -34,7 +34,7 @@ Pairl updateplane2(char *airlineNum)
     {
         temp=temp->next;
     }
-        ++temp->next->left;
+        temp->next->left+=1;
      return p;
 }
 //更新客户信息
