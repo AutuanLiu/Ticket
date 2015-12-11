@@ -14,7 +14,7 @@
 
 ***
 ###程序主要功能以及数据传输流程图
-![](https://www.gliffy.com/go/publish/image/9633259/L.png)
+![flowchart](http://i.imgur.com/xqktV7K.png)
 ***
 ######Date 
 >2015年11月25日
