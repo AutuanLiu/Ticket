@@ -1,4 +1,7 @@
 # Ticket
+
+–––    
+
 **A system of airplane tickets Selling and Management.** 
 ---  
 ---
@@ -10,8 +13,8 @@
 >`visio`以及`gliffy`     
 
 * 开发语言       
-> `C`语言，`markdown`文本标记语言     
-***
+> `C`语言，`markdown`文本标记语言       
+
 ---  
   
 ###程序运行方法
@@ -26,13 +29,13 @@
 
 ---
 ### note  
-推荐使用 `code::blocks`,因为该工程在其上开发，**不保证**`VC6.0`可以**正常编译运行**。
-***
+推荐使用 `code::blocks`,因为该工程在其上开发，**不保证**`VC6.0`可以**正常编译运行**。     
+
 ---
 ###程序主要功能以及数据传输流程图
 
-![flowchart](https://github.com/AutuanLiu/Ticket/blob/master/FlowChart.png)
-***
+![flowchart](https://github.com/AutuanLiu/Ticket/blob/master/FlowChart.png)    
+
 ---
 ######Date
 2015年11月25日
