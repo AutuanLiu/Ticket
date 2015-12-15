@@ -12,7 +12,8 @@
 * 开发语言       
 > `C`语言，`markdown`文本标记语言     
 ***
----
+---  
+  
 ###程序运行方法
 * 通过点击[here](https://github.com/AutuanLiu/Ticket "source code")或者访问`https://github.com/AutuanLiu/Ticket`;  
 * 点击页面的右上方的`Download ZIP`，将其下载到本地;  
