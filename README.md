@@ -21,7 +21,7 @@
 * 将`flight_info.csv`和`guest_info.csv`文件放到当前目录下;  
 * `backupdata.csv`文件为备用数据，可以不用理会。  
 * 关于.md文件请使用markdownpad打开，或者notepad打开，查看源码，不影响其阅读；  
-* 同名的HTML文件，可通过浏览器打开。
+* 同名的HTML文件，可通过浏览器打开。  
 ---
 
 ### note  
