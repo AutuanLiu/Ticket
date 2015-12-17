@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "adt.h"
-//Ğ´Èë¿Í»§ÂòÆ±ĞÅÏ¢
+//å†™å…¥å®¢æˆ·ä¹°ç¥¨ä¿¡æ¯
 void  writefile(char *str)
 {
     FILE *fout;
     fout=fopen("guest_info.csv","ab");
-    //ÔÚÄ©Î²×·¼Ó
+    //åœ¨æœ«å°¾è¿½åŠ 
     if(fout==NULL)
         perror("guest_info.csv");
     else
@@ -14,12 +14,12 @@ void  writefile(char *str)
     fclose(fout);
 }
 
-//Ğ´ÈëĞÂº½°àĞÅÏ¢
+//å†™å…¥æ–°èˆªç­ä¿¡æ¯
 void writefilenew(char *str)
 {
     FILE *fout;
     fout=fopen("flight_info.csv","ab");
-    //ÔÚÄ©Î²×·¼Ó
+    //åœ¨æœ«å°¾è¿½åŠ 
     if(fout==NULL)
         perror("flight_info.csv");
     else
@@ -27,7 +27,7 @@ void writefilenew(char *str)
     fclose(fout);
 }
 
-//º½°àĞÅÏ¢×ª»¯Îª×Ö·û´®
+//èˆªç­ä¿¡æ¯è½¬åŒ–ä¸ºå­—ç¬¦ä¸²
 void Pairl2String(Pairl p, char *s)
 {
     s[0] = '\0';
@@ -39,7 +39,7 @@ void Pairl2String(Pairl p, char *s)
             strcat(s, p->end_time); strcat(s, ",");
             strcat(s, p->destination); strcat(s, ",");
             char tmp[500];
-            //·¢µ½»º³åÇøtmp
+            //å‘åˆ°ç¼“å†²åŒºtmp
             sprintf(tmp, "%d", p->price);
             strcat(s, tmp); strcat(s, ",");
             sprintf(tmp, "%.2f", p->discount);
@@ -58,18 +58,18 @@ void writePairl(Pairl p)
 {
     char s[8000];
     Pairl2String(p, s);
-    //Èô¹û´æÔÚ£¬ÏÈÉ¾³ı£¬ÔÚÖØĞ´
+    //è‹¥æœå­˜åœ¨ï¼Œå…ˆåˆ é™¤ï¼Œåœ¨é‡å†™
     if(access("flight_info.csv",0)==0)
         remove("flight_info.csv");
     FILE *fp = fopen("flight_info.csv","w");
-    fprintf(fp, "%s","º½°àºÅ,Æğ·ÉÊ±¿Ì,µ½´ïÊ±¿Ì,Ä¿µÄµØ,Æ±¼Û,ÕÛ¿Û,Ã¿°àÔØÁ¿,Ê£ÓàÔØÁ¿\n");
+    fprintf(fp, "%s","èˆªç­å·,èµ·é£æ—¶åˆ»,åˆ°è¾¾æ—¶åˆ»,ç›®çš„åœ°,ç¥¨ä»·,æŠ˜æ‰£,æ¯ç­è½½é‡,å‰©ä½™è½½é‡\n");
     fclose(fp);
     FILE *fp1 = fopen("flight_info.csv","ab");
-    fprintf(fp1, "%s", s);
+    fprintf(fp1, "%s\n", s);
     fclose(fp);
 }
 //
-//³Ë¿ÍĞÅÏ¢×Ö·û»¯
+//ä¹˜å®¢ä¿¡æ¯å­—ç¬¦åŒ–
 void guest2String(Puser p, char *s)
 {
     s[0] = '\0';
@@ -81,7 +81,7 @@ void guest2String(Puser p, char *s)
             strcat(s, p->destination); strcat(s, ",");
             strcat(s, p->line_num); strcat(s, ",");
             char tmp[500];
-            //·¢µ½»º³åÇøtmp
+            //å‘åˆ°ç¼“å†²åŒºtmp
             sprintf(tmp, "%d", p->seat_num);
             strcat(s, tmp);
             if(p->next != NULL)
@@ -94,13 +94,11 @@ void writeguest(Puser p)
 {
     char s[5000];
     guest2String(p, s);
-    //Èô¹û´æÔÚ£¬ÏÈÉ¾³ı£¬ÔÚÖØĞ´
+    //è‹¥æœå­˜åœ¨ï¼Œå…ˆåˆ é™¤ï¼Œåœ¨é‡å†™
     if(access("guest_info.csv",0)==0)
         remove("guest_info.csv");
     FILE *fp = fopen("guest_info.csv","w");
-    fprintf(fp, "%s","ĞÕÃû,ID,Ä¿µÄµØ,º½°àºÅ,×ùÎ»ºÅ\n");
+    fprintf(fp, "%s","å§“å,ID,ç›®çš„åœ°,èˆªç­å·,åº§ä½å·\n");
+    fprintf(fp, "%s\n", s);
     fclose(fp);
-    FILE *fp1 = fopen("guest_info.csv","ab");
-    fprintf(fp1, "%s", s);
-    fclose(fp1);
 }

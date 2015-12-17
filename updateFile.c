@@ -1,59 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "adt.h"
-//¸üÐÂº½°àÐÅÏ¢
-Pairl updateplane1(char *airlineNum)
+//æ›´æ–°èˆªç­ä¿¡æ¯
+Pairl updateplane(char *airlineNum, int flag)
 {
     FILE *pf = fopen("flight_info.csv","r");
     if(pf==NULL)
         perror("flight_info.csv");
-        //¶ÁÈëÐÅÏ¢²¢´´½¨Á´±í
+        //è¯»å…¥ä¿¡æ¯å¹¶åˆ›å»ºé“¾è¡¨
     Pairl temp,p = createplaneList(pf);
+    fclose(pf);
     if(p==NULL)
-        printf("´´½¨Á´±íÊ§°Ü\n");
+        printf("åˆ›å»ºé“¾è¡¨å¤±è´¥\n");
     temp=p;
-    while(!(equals(temp->next->line_num,airlineNum))&&temp->next->next!=NULL)
-    {
-        temp=temp->next;
+    while(temp != NULL) {
+        if(strcmp(airlineNum, temp->line_num) == 0) {
+            if(flag == 1)
+                temp->left++;
+            else if(flag == 0)
+                temp->left--;
+            break;
+        }
+        temp = temp->next;
     }
-        temp->next->left-=1;
-     return p;
-}
 
-Pairl updateplane2(char *airlineNum)
-{
-    FILE *pf = fopen("flight_info.csv","r");
-    if(pf==NULL)
-        perror("flight_info.csv");
-        //¶ÁÈëÐÅÏ¢²¢´´½¨Á´±í
-    Pairl temp,p = createplaneList(pf);
-    if(p==NULL)
-        printf("´´½¨Á´±íÊ§°Ü\n");
-    temp=p;
-    while(!(equals(temp->next->line_num,airlineNum))&&temp->next->next!=NULL)
-    {
-        temp=temp->next;
-    }
-        temp->next->left+=1;
-     return p;
+    return p;
 }
-//¸üÐÂ¿Í»§ÐÅÏ¢
+//æ›´æ–°å®¢æˆ·ä¿¡æ¯
 Puser updateguest(char *name)
 {
         FILE *pf = fopen("guest_info.csv","r");
         if(pf==NULL)
             perror("guest_info.csv");
-            //¶ÁÈëÐÅÏ¢²¢´´½¨Á´±í
+            //è¯»å…¥ä¿¡æ¯å¹¶åˆ›å»ºé“¾è¡¨
         Puser q,temp,p = createguestList(pf);
+        fclose(pf);
         if(p==NULL)
-            printf("´´½¨Á´±íÊ§°Ü\n");
+            printf("åˆ›å»ºé“¾è¡¨å¤±è´¥\n");
         temp=p;
-        while(temp->next->name==name&&temp->next->next!=NULL)
-        {
-            q=temp->next;
-            temp->next=q->next;
-            free(q);
+        while(temp->next != NULL) {
+            if(strcmp(temp->next->name, name) == 0) {
+                q = temp->next->next;
+                free(temp->next);
+                temp->next = q;
+                return p;
+            }
+            temp=temp->next;
         }
         return p;
-    fclose(pf);
+
 }

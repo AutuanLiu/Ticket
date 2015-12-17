@@ -1,28 +1,28 @@
-//ÊµÏÖ¸÷Ïî¹¦ÄÜµÄ.cÎÄ¼ş
+//å®ç°å„é¡¹åŠŸèƒ½çš„.cæ–‡ä»¶
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "PublicInfo.h"
 char userhasTicket[COLUMN][50];
 char seatNum2str[10];
-int buyTickets()   //ÂòÆ±
+int buyTickets()   //ä¹°ç¥¨
 {
     FILE *pf = fopen("flight_info.csv","r");
     if(pf==NULL)
         perror("flight_info.csv");
     Pairl p = createplaneList(pf);
-    Pairl air[9]; //Ö¸ÕëÊı×é
+    Pairl air[9]; //æŒ‡é’ˆæ•°ç»„
     char options[3][100];
-    char ginfo[2][50],guestInfo[500]; //µ±Ç°¿Í»§ĞÅÏ¢
+    char ginfo[2][50],guestInfo[500]; //å½“å‰å®¢æˆ·ä¿¡æ¯
     int i,max,chioces,number,seatNum;
-    printf("ÇëÊäÈëÄãµÄĞÕÃûÓëÖ¤¼şºÅ(ÒÔenter»ò¿Õ¸ñ¸ô¿ª)\n");
+    printf("è¯·è¾“å…¥ä½ çš„å§“åä¸è¯ä»¶å·(ä»¥enteræˆ–ç©ºæ ¼éš”å¼€)\n");
     scanf("%s%s",ginfo[0],ginfo[1]);
-    printf("ÇëÊäÈëÄãÒªµ½´ïµÄÄ¿µÄµØ¡¢×îÔçÆğ·ÉÊ±¼ä£¬×îÍí½µÂäÊ±¼ä£¬×î´ó¼Û¸ñ(ÒÔenter»ò¿Õ¸ñ¸ô¿ª)\n");
+    printf("è¯·è¾“å…¥ä½ è¦åˆ°è¾¾çš„ç›®çš„åœ°ã€æœ€æ—©èµ·é£æ—¶é—´ï¼Œæœ€æ™šé™è½æ—¶é—´ï¼Œæœ€å¤§ä»·æ ¼(ä»¥enteræˆ–ç©ºæ ¼éš”å¼€)\n");
     scanf("%s%s%s%d",options[0],options[1],options[2],&max);
-    printf("ÇëÈ·ÈÏÄãµÄ¹ºÆ±ĞÅÏ¢\n");
-    printf("ĞÕÃû£º%s\nÖ¤¼şºÅ£º%s\nÄ¿µÄµØ£º%s\n×îÔçÆğ·ÉÊ±¼ä£º%s\n×îÍí½µÂäÊ±¼ä£º%s\n×î´ó¼Û¸ñ£º%d\n"
+    printf("è¯·ç¡®è®¤ä½ çš„è´­ç¥¨ä¿¡æ¯\n");
+    printf("å§“åï¼š%s\nè¯ä»¶å·ï¼š%s\nç›®çš„åœ°ï¼š%s\næœ€æ—©èµ·é£æ—¶é—´ï¼š%s\næœ€æ™šé™è½æ—¶é—´ï¼š%s\næœ€å¤§ä»·æ ¼ï¼š%d\n"
            ,ginfo[0],ginfo[1],options[0],options[1],options[2],max);
-    printf("ÊÇ(0)·ñ(1)ÓĞ´íÎó£¿ ");
+    printf("æ˜¯(0)å¦(1)æœ‰é”™è¯¯ï¼Ÿ ");
     scanf("%d",&chioces);
     switch(chioces)
     {
@@ -31,24 +31,24 @@ int buyTickets()   //ÂòÆ±
             {
                 int sum=search(p, air, options, max);
                 if(sum==0)
-                    printf("¶Ô²»Æğ£¬Ã»ÓĞÂú×ãÌõ¼şµÄº½°à!!!\n");
+                    printf("å¯¹ä¸èµ·ï¼Œæ²¡æœ‰æ»¡è¶³æ¡ä»¶çš„èˆªç­!!!\n");
                 else
                 {
-                    printf("Âú×ãÌõ¼şµÄº½°àÈçÏÂ£º\n");
-                    printf("ĞòºÅ   º½ÏßºÅ Æğ·ÉÊ±¼ä ½µÂäÊ±¼ä ÕÛ¿Û »úÆ±¼Û¸ñ  ÓàÆ±\n");
+                    printf("æ»¡è¶³æ¡ä»¶çš„èˆªç­å¦‚ä¸‹ï¼š\n");
+                    printf("åºå·   èˆªçº¿å· èµ·é£æ—¶é—´ é™è½æ—¶é—´ æŠ˜æ‰£ æœºç¥¨ä»·æ ¼  ä½™ç¥¨\n");
                     for(i = 0; i < sum; i++)
                     {
                         printf("%d:",i+1);
                         printf("\t%s\t%s\t%s\t%.2f\t%d\t%d\n",air[i]->line_num,air[i]->start_time,
                         air[i]->end_time,air[i]->discount,air[i]->price,air[i]->left);
                     }
-                    printf("ÇëÊäÈëÄãÒª¹ºÂòº½°àµÄ¶ÔÓ¦ĞòºÅ: ");
+                    printf("è¯·è¾“å…¥ä½ è¦è´­ä¹°èˆªç­çš„å¯¹åº”åºå·: ");
                     scanf("%d",&number);
                     seatNum=air[number-1]->total-air[number-1]->left+1;
-                    printf("ÄúÔÚ%s´Îº½°àµÄ¹ºÆ±ÒµÎñ³É¹¦£¬ÄúµÄ»úÆ±µÄ×ùÎ»ºÅÎª£º%d\n",air[number-1]->line_num,seatNum);
-                    printf("ÕıÔÚÎªÄú°ìÀí£¬ÇëÉÔºó . . .\n");
+                    printf("æ‚¨åœ¨%sæ¬¡èˆªç­çš„è´­ç¥¨ä¸šåŠ¡æˆåŠŸï¼Œæ‚¨çš„æœºç¥¨çš„åº§ä½å·ä¸ºï¼š%d\n",air[number-1]->line_num,seatNum);
+                    printf("æ­£åœ¨ä¸ºæ‚¨åŠç†ï¼Œè¯·ç¨å . . .\n");
                     itoa(seatNum,seatNum2str,10);
-                    //°Ñ¹ºÂò»úÆ±µÄÓÃ»§ĞÅÏ¢´æÈëÎÄ¼ş
+                    //æŠŠè´­ä¹°æœºç¥¨çš„ç”¨æˆ·ä¿¡æ¯å­˜å…¥æ–‡ä»¶
                     writefile(ginfo[0]);
                     writefile(",");
                     writefile(ginfo[1]);
@@ -59,10 +59,10 @@ int buyTickets()   //ÂòÆ±
                     writefile(",");
                     writefile(seatNum2str);
                     writefile("\n");
-                    //ĞŞ¸ÄÓàÆ±ĞÅÏ¢
-                    Pairl new=updateplane1(air[number-1]->line_num);
+                    //ä¿®æ”¹ä½™ç¥¨ä¿¡æ¯
+                    Pairl new=updateplane(air[number-1]->line_num, 0);
                     writePairl(new);
-                    printf("ÊÖĞø°ìÀí³É¹¦£¬»¶Ó­ÏÂ´Î¹âÁÙ£¬³Ë»úÓä¿ì£¡\n");
+                    printf("æ‰‹ç»­åŠç†æˆåŠŸï¼Œæ¬¢è¿ä¸‹æ¬¡å…‰ä¸´ï¼Œä¹˜æœºæ„‰å¿«ï¼\n");
                 }
             }
     }
@@ -70,7 +70,7 @@ int buyTickets()   //ÂòÆ±
     return 1;
 }
 
-//ÍËÆ±
+//é€€ç¥¨
 void refund(char *name)
 {
     Pairl p1;
@@ -78,63 +78,73 @@ void refund(char *name)
     FILE *pf = fopen("guest_info.csv","r");
     Puser temp;
     Puser p = createguestList(pf);
-    temp=p;
-    while(temp->name==name&&temp->next!=NULL)
-        temp=temp->next;
-    p1=updateplane2(temp->line_num);
+    fclose(pf);
+
+    temp=p->next;
+    while(temp!=NULL) {
+        if(strcmp(temp->name, name) == 0) {
+            break;
+        }
+        temp = temp->next;
+    }
+    if(temp == NULL) {
+        printf("æœªæŸ¥è¯¢åˆ°é¡¾å®¢è®¢ç¥¨ä¿¡æ¯");
+        return;
+    }
+    p1=updateplane(temp->line_num,1);
     writePairl(p1);
     p2=updateguest(name);
     writeguest(p2);
-    printf("ÍËÆ±³É¹¦£¡\n");
+    printf("é€€ç¥¨æˆåŠŸï¼\n");
 }
 
-//¸ù¾İĞÕÃû²éÑ¯¶©Æ±ĞÅÏ¢
+//æ ¹æ®å§“åæŸ¥è¯¢è®¢ç¥¨ä¿¡æ¯
 void query(char *name)
 {
         FILE *pf = fopen("guest_info.csv","r");
         if(pf==NULL)
             perror("guest_info.csv");
-            //¶ÁÈëĞÅÏ¢²¢´´½¨Á´±í
+            //è¯»å…¥ä¿¡æ¯å¹¶åˆ›å»ºé“¾è¡¨
         Puser temp,p = createguestList(pf);
         if(p==NULL)
-            printf("´´½¨Á´±íÊ§°Ü\n");
+            printf("åˆ›å»ºé“¾è¡¨å¤±è´¥\n");
         temp=p;
         while(!(equals(temp->name,name))&&temp->next!=NULL)
         {
             temp=temp->next;
         }
         if(temp->next==NULL)
-        printf("¶Ô²»Æğ£¬Äú»¹Ã»ÓĞ¶©Æ±»ò¶©Æ±²»³É¹¦.\n");
+        printf("å¯¹ä¸èµ·ï¼Œæ‚¨è¿˜æ²¡æœ‰è®¢ç¥¨æˆ–è®¢ç¥¨ä¸æˆåŠŸ.\n");
         else
         {
-            printf("ÄúµÄ»úÆ±ĞÅÏ¢Îª£º\n");
-            printf("ĞÕÃû,ID,Ä¿µÄµØ,º½°àºÅ,×ùÎ»ºÅ\n");
+            printf("æ‚¨çš„æœºç¥¨ä¿¡æ¯ä¸ºï¼š\n");
+            printf("å§“å,ID,ç›®çš„åœ°,èˆªç­å·,åº§ä½å·\n");
             printf("%s,%s,%s,%s,%d\n",temp->name,temp->ID,temp->destination,temp->line_num,temp->seat_num);
         }
     fclose(pf);
 }
 
-//²éÑ¯º½ÏßĞÅÏ¢
+//æŸ¥è¯¢èˆªçº¿ä¿¡æ¯
 int airInfo(char *airlineNum)
 {
     FILE *pf = fopen("flight_info.csv","r");
     if(pf==NULL)
         perror("flight_info.csv");
-        //¶ÁÈëĞÅÏ¢²¢´´½¨Á´±í
+        //è¯»å…¥ä¿¡æ¯å¹¶åˆ›å»ºé“¾è¡¨
     Pairl temp,p = createplaneList(pf);
     if(p==NULL)
-        printf("´´½¨Á´±íÊ§°Ü\n");
+        printf("åˆ›å»ºé“¾è¡¨å¤±è´¥\n");
     temp=p;
     while(!(equals(temp->line_num,airlineNum))&&temp->next!=NULL)
     {
         temp=temp->next;
     }
     if(temp->next==NULL)
-        printf("¶Ô²»Æğ£¬²»´æÔÚ¸Ãº½°àºÅ£¡\n");
+        printf("å¯¹ä¸èµ·ï¼Œä¸å­˜åœ¨è¯¥èˆªç­å·ï¼\n");
     else
     {
-        printf("Ëù²éÕÒµÄº½ÏßĞÅÏ¢Îª£º\n");
-        printf("º½ÏßºÅ Æğ·ÉÊ±¼ä ½µÂäÊ±¼ä Ä¿µÄµØ ÕÛ¿Û  »úÆ±¼Û¸ñ  ÓàÆ±\n");
+        printf("æ‰€æŸ¥æ‰¾çš„èˆªçº¿ä¿¡æ¯ä¸ºï¼š\n");
+        printf("èˆªçº¿å· èµ·é£æ—¶é—´ é™è½æ—¶é—´ ç›®çš„åœ° æŠ˜æ‰£  æœºç¥¨ä»·æ ¼  ä½™ç¥¨\n");
         printf("%s\t%s\t %s\t %s\t%.2f\t%d\t %d\n",temp->line_num,temp->start_time,
                         temp->end_time,temp->destination,temp->discount,temp->price,temp->left);
     }
@@ -142,47 +152,47 @@ int airInfo(char *airlineNum)
     return 1;
 }
 
-//º½ÏßÊÇ·ñ´æÔÚ
+//èˆªçº¿æ˜¯å¦å­˜åœ¨
 int isLineExist(char *airlineNum)
 {
     FILE *pf = fopen("flight_info.csv","r");
     if(pf==NULL)
         perror("flight_info.csv");
-        //¶ÁÈëĞÅÏ¢²¢´´½¨Á´±í
+        //è¯»å…¥ä¿¡æ¯å¹¶åˆ›å»ºé“¾è¡¨
     Pairl temp,p = createplaneList(pf);
     if(p==NULL)
-        printf("´´½¨Á´±íÊ§°Ü\n");
+        printf("åˆ›å»ºé“¾è¡¨å¤±è´¥\n");
     temp=p;
     while(!(equals(temp->line_num,airlineNum))&&temp->next!=NULL)
     {
         temp=temp->next;
     }
     if(temp->next==NULL)
-        return 0;//²»´æÔÚÎª 0
+        return 0;//ä¸å­˜åœ¨ä¸º 0
     else
     return 1;
     fclose(pf);
 }
 
-//²éÑ¯ÒÑÂô»úÆ±
+//æŸ¥è¯¢å·²å–æœºç¥¨
 //have bugs  and need to fix
 char *selled()
 {
-    //´Óguest-info¶ÁÈ¡¼´¿É
+    //ä»guest-infoè¯»å–å³å¯
 
     char s[1000];
     FILE *pf = fopen("guest_info.csv","r");
     if(pf==NULL)
         perror("guest_info.csv");
     Puser pall = createguestList(pf);
-    //±éÀúº½°àĞÅÏ¢
-    printf("ĞÕÃû,ID,Ä¿µÄµØ,º½°àºÅ,×ùÎ»ºÅ\n\n");
+    //éå†èˆªç­ä¿¡æ¯
+    printf("å§“å,ID,ç›®çš„åœ°,èˆªç­å·,åº§ä½å·\n\n");
     guest2String(pall, s);
     printf("%s\n",s);
     fclose(pf);
 }
 
-//²éÑ¯ËùÓĞµÄº½°à
+//æŸ¥è¯¢æ‰€æœ‰çš„èˆªç­
 void queryp()
 {
     char s[1000];
@@ -190,8 +200,8 @@ void queryp()
     if(pf==NULL)
         perror("flight_info.csv");
     Pairl pall = createplaneList(pf);
-    //±éÀúº½°àĞÅÏ¢
-    printf("º½°àºÅ,Æğ·ÉÊ±¿Ì,µ½´ïÊ±¿Ì,Ä¿µÄµØ,Æ±¼Û,ÕÛ¿Û,Ã¿°àÔØÁ¿,Ê£ÓàÔØÁ¿\n\n");
+    //éå†èˆªç­ä¿¡æ¯
+    printf("èˆªç­å·,èµ·é£æ—¶åˆ»,åˆ°è¾¾æ—¶åˆ»,ç›®çš„åœ°,ç¥¨ä»·,æŠ˜æ‰£,æ¯ç­è½½é‡,å‰©ä½™è½½é‡\n\n");
     Pairl2String(pall, s);
     printf("%s\n",s);
     fclose(pf);
