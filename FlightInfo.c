@@ -3,13 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
-#include "FlightInfo.h"
+#include "PublicInfo.h"
+
 char flightPrintInfo[COUNT][100];
 //函数声明
 void flightSort(Pairl *arr, int lo, int hi, int d);
 int read(char (*pInfo)[100], size_t s, FILE *pf);
 int getline(char *pLine, size_t s, FILE *pf);
 int equals(char *a, char *b);
+//时间结构体
 typedef struct
 {
     int hour;
@@ -62,16 +64,16 @@ int addPlane(Pairl head, char (*plane)[100])        //添加航班
     if(pnew == NULL)
         return 0;
     //赋值
-    strcpy(pnew->line_num, plane[0]);
-    strcpy(pnew->start_time, plane[2]);
-    strcpy(pnew->end_time, plane[3]);
-    strcpy(pnew->destination, plane[4]);
+    strcpy(pnew->line_num,plane[0]);
+    strcpy(pnew->start_time,plane[1]);
+    strcpy(pnew->end_time,plane[2]);
+    strcpy(pnew->destination,plane[3]);
     //将字符串转换为整型
-    pnew->price = atoi(plane[7]);
+    pnew->price = atoi(plane[4]);
     //将字符串转换为浮点型
-    pnew->discount = atof(plane[8]);
-    pnew->total = atoi(plane[9]);
-    pnew->left = atoi(plane[10]);
+    pnew->discount = atof(plane[5]);
+    pnew->total = atoi(plane[6]);
+    pnew->left = atoi(plane[7]);
     pnew->next = head->next;
     head->next = pnew;
     return 1;
@@ -138,7 +140,6 @@ void flightSort(Pairl *arr, int lo, int hi, int d)
 //航线的搜索
 int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice)
     // 指针的指针（存储满足条件的航班）    //查找条件 //能接受的最大价格，无要求为0
-    //isDiscount=1表示不打折  hasLeft=1表示没有余票
 {
     int pos = 0;    //满足条件的个数
     head = head->next;

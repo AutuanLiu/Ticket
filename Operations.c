@@ -2,7 +2,9 @@
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "FlightInfo.h"
+#include "PublicInfo.h"
+char userhasTicket[COLUMN][50];
+char seatNum2str[10];
 int buyTickets()   //买票
 {
     FILE *pf = fopen("flight_info.csv","r");
@@ -36,36 +38,80 @@ int buyTickets()   //买票
                     printf("序号   航线号 起飞时间 降落时间 折扣 机票价格  余票\n");
                     for(i = 0; i < sum; i++)
                     {
-                        printf("%d:",i);
+                        printf("%d:",i+1);
                         printf("\t%s\t%s\t%s\t%.2f\t%d\t%d\n",air[i]->line_num,air[i]->start_time,
                         air[i]->end_time,air[i]->discount,air[i]->price,air[i]->left);
                     }
                     printf("请输入你要购买航班的对应序号: ");
                     scanf("%d",&number);
-                    seatNum=air[number]->total-air[number]->left+1;
-                    printf("购票成功，您购买的机票的座位号为：%d\n",seatNum);
-                    //可以输入出当亲航班下的客户名单
-                    //使用字典结构（adt.h内以作定义）
+                    seatNum=air[number-1]->total-air[number-1]->left+1;
+                    printf("您在%s次航班的购票业务成功，您的机票的座位号为：%d\n",air[number-1]->line_num,seatNum);
+                    printf("正在为您办理，请稍后 . . .\n");
+                    itoa(seatNum,seatNum2str,10);
+                    //把购买机票的用户信息存入文件
+                    writefile(ginfo[0]);
+                    writefile(",");
+                    writefile(ginfo[1]);
+                    writefile(",");
+                    writefile(options[0]);
+                    writefile(",");
+                    writefile(air[number-1]->line_num);
+                    writefile(",");
+                    writefile(seatNum2str);
+                    writefile("\n");
+                    //修改余票信息
+                    Pairl new=updateplane1(air[number-1]->line_num);
+                    writePairl(new);
+                    printf("手续办理成功，欢迎下次光临，乘机愉快！\n");
                 }
             }
     }
-
-                  //待完善          //修改flight_info文件中的余票信息
     fclose(pf);
     return 1;
 }
 
 //退票
-int refund(char *airlineNum)
+void refund(char *name)
 {
-
-  //待完善  //修改flight_indo余票
+    Pairl p1;
+    Puser p2;
+    FILE *pf = fopen("guest_info.csv","r");
+    Puser temp;
+    Puser p = createguestList(pf);
+    temp=p;
+    while(temp->name==name&&temp->next!=NULL)
+        temp=temp->next;
+    p1=updateplane2(temp->line_num);
+    writePairl(p1);
+    p2=updateguest(name);
+    writeguest(p2);
+    printf("退票成功！\n");
 }
 
-//根据证件号码查询订票信息
-int query(char *ID)
+//根据姓名查询订票信息
+void query(char *name)
 {
-
+        FILE *pf = fopen("guest_info.csv","r");
+        if(pf==NULL)
+            perror("guest_info.csv");
+            //读入信息并创建链表
+        Puser temp,p = createguestList(pf);
+        if(p==NULL)
+            printf("创建链表失败\n");
+        temp=p;
+        while(!(equals(temp->name,name))&&temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        if(temp->next==NULL)
+        printf("对不起，您还没有订票或订票不成功.\n");
+        else
+        {
+            printf("您的机票信息为：\n");
+            printf("姓名,ID,目的地,航班号,座位号\n");
+            printf("%s,%s,%s,%s,%d\n",temp->name,temp->ID,temp->destination,temp->line_num,temp->seat_num);
+        }
+    fclose(pf);
 }
 
 //查询航线信息
@@ -74,6 +120,7 @@ int airInfo(char *airlineNum)
     FILE *pf = fopen("flight_info.csv","r");
     if(pf==NULL)
         perror("flight_info.csv");
+        //读入信息并创建链表
     Pairl temp,p = createplaneList(pf);
     if(p==NULL)
         printf("创建链表失败\n");
@@ -82,21 +129,72 @@ int airInfo(char *airlineNum)
     {
         temp=temp->next;
     }
-    if(temp==NULL)
-        printf("不存在该航班号！");
+    if(temp->next==NULL)
+        printf("对不起，不存在该航班号！\n");
     else
     {
         printf("所查找的航线信息为：\n");
-        printf("%s %s %s %.2f %d %d\n",temp->line_num,temp->start_time,
-                        temp->end_time,temp->discount,temp->price,temp->left);
+        printf("航线号 起飞时间 降落时间 目的地 折扣  机票价格  余票\n");
+        printf("%s\t%s\t %s\t %s\t%.2f\t%d\t %d\n",temp->line_num,temp->start_time,
+                        temp->end_time,temp->destination,temp->discount,temp->price,temp->left);
     }
+    fclose(pf);
     return 1;
 }
 
+//航线是否存在
+int isLineExist(char *airlineNum)
+{
+    FILE *pf = fopen("flight_info.csv","r");
+    if(pf==NULL)
+        perror("flight_info.csv");
+        //读入信息并创建链表
+    Pairl temp,p = createplaneList(pf);
+    if(p==NULL)
+        printf("创建链表失败\n");
+    temp=p;
+    while(!(equals(temp->line_num,airlineNum))&&temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    if(temp->next==NULL)
+        return 0;//不存在为 0
+    else
+    return 1;
+    fclose(pf);
+}
+
 //查询已卖机票
-int selled()
+//have bugs  and need to fix
+char *selled()
 {
     //从guest-info读取即可
+
+    char s[1000];
+    FILE *pf = fopen("guest_info.csv","r");
+    if(pf==NULL)
+        perror("guest_info.csv");
+    Puser pall = createguestList(pf);
+    //遍历航班信息
+    printf("姓名,ID,目的地,航班号,座位号\n\n");
+    guest2String(pall, s);
+    printf("%s\n",s);
+    fclose(pf);
+}
+
+//查询所有的航班
+void queryp()
+{
+    char s[1000];
+    FILE *pf = fopen("flight_info.csv","r");
+    if(pf==NULL)
+        perror("flight_info.csv");
+    Pairl pall = createplaneList(pf);
+    //遍历航班信息
+    printf("航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量\n\n");
+    Pairl2String(pall, s);
+    printf("%s\n",s);
+    fclose(pf);
 }
 
 
