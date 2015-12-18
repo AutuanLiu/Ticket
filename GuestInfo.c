@@ -1,41 +1,45 @@
-//¹ØÓÚ³Ë¿ÍµÄ.cÎÄ¼ş
+//å…³äºä¹˜å®¢çš„.cæ–‡ä»¶
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
 #include "PublicInfo.h"
 char userhasTicket[COLUMN][50];
-//º¯ÊıÉùÃ÷
+//å‡½æ•°å£°æ˜
 void listSort(Puser info);
 int read(char (*Info)[100], size_t s, FILE *pf);
 int getline(char *Line, size_t s, FILE *pf);
 int equals(char *a, char *b);
 int check(Puser head, Puser *guestinfo, char (*options)[100]);
 
-Puser initial()    //Á´±í³õÊ¼»¯
+Puser initial()    //é“¾è¡¨åˆå§‹åŒ–
 {
     Puser pnew = (Puser)malloc(sizeof(user));
     if(pnew != NULL)
-        //ËùÓĞÔªËØ³õÊ¼»¯Îª 0
+        //æ‰€æœ‰å…ƒç´ åˆå§‹åŒ–ä¸º 0
         memset(pnew, 0, sizeof(user));
     return pnew;
 }
 
-int addguest(Puser head, char (*row)[100])        //Ìí¼Ó¿Í»§
+Puser nodeInAddGuest = NULL;
+int addguest(Puser head, char (*row)[100])        //æ·»åŠ å®¢æˆ·
 {
     Puser pnew = initial();
     if(pnew == NULL)
         return 0;
-    //¸³Öµ
+    //èµ‹å€¼
     strcpy(pnew->name,row[0]);
     strcpy(pnew->line_num,row[3]);
     strcpy(pnew->ID,row[1]);
     strcpy(pnew->destination,row[2]);
-    //½«×Ö·û´®×ª»»ÎªÕûĞÍ
+    //å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºæ•´å‹
     pnew->seat_num = atoi(row[4]);
-    //½«×Ö·û´®×ª»»Îª¸¡µãĞÍ
-    pnew->next = head->next;
-    head->next = pnew;
+    //å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºæµ®ç‚¹å‹
+    if(nodeInAddGuest == NULL)
+        nodeInAddGuest = head;
+
+    nodeInAddGuest->next = pnew;
+    nodeInAddGuest = nodeInAddGuest->next;
     return 1;
 }
 
@@ -44,15 +48,16 @@ Puser createguestList(FILE *pf)
     Puser head = initial();
     if(head == NULL)
         return NULL;
-        //¿ªÍ·ÒÑ¾­¶¨Òå
+        //å¼€å¤´å·²ç»å®šä¹‰
     read(userhasTicket, COLUMN, pf);
-    char splitStr[COLUMN][100];//Ö»ÔÚ±¾º¯ÊıÖĞÓĞĞ§
+    char splitStr[COLUMN][100];//åªåœ¨æœ¬å‡½æ•°ä¸­æœ‰æ•ˆ
     while( read(splitStr, COLUMN, pf) != EOF)
         addguest(head, splitStr);
+    nodeInAddGuest = NULL;
     return head;
 }
 
-//±í²å·¨ÅÅĞò,°´ÕÕ×ùÎ»ºÅ
+//è¡¨æ’æ³•æ’åº,æŒ‰ç…§åº§ä½å·
 void listSort(Puser info)
 {
     Puser  now,pre,p,q,head;
@@ -84,11 +89,11 @@ void listSort(Puser info)
 }
 
 
-//³Ë¿ÍµÄËÑË÷
+//ä¹˜å®¢çš„æœç´¢
 int check(Puser head, Puser *guestinfo, char (*options)[100])
-    // Ö¸ÕëµÄÖ¸Õë£¨´æ´¢Âú×ãÌõ¼şµÄº½°à£©    //²éÕÒÌõ¼ş£¬º½Ïß
+    // æŒ‡é’ˆçš„æŒ‡é’ˆï¼ˆå­˜å‚¨æ»¡è¶³æ¡ä»¶çš„èˆªç­ï¼‰    //æŸ¥æ‰¾æ¡ä»¶ï¼Œèˆªçº¿
 {
-    int pos = 0;    //Âú×ãÌõ¼şµÄ¸öÊı
+    int pos = 0;    //æ»¡è¶³æ¡ä»¶çš„ä¸ªæ•°
     head = head->next;
     while(head!=NULL)
     {
@@ -109,7 +114,7 @@ void  allguest()
     int sum,i;
     char option[1][100];
     Puser s[50];
-    printf("ÇëÊäÈëº½°àºÅ£º ");
+    printf("è¯·è¾“å…¥èˆªç­å·ï¼š ");
     scanf("%s",option[0]);
     FILE *pf = fopen("guest_info.csv","r");
     if(pf==NULL)
@@ -117,11 +122,11 @@ void  allguest()
     Pairl g = createguestList(pf);
     sum=check(g,s,option);
     if(sum==0)
-        printf("¶Ô²»Æğ£¬µ±Ç°º½°àÎŞÈË´î³Ë\n");
+        printf("å¯¹ä¸èµ·ï¼Œå½“å‰èˆªç­æ— äººæ­ä¹˜\n");
     else
     {
-       printf("º½°àÄÚËùÓĞµÄ³Ë¿ÍĞÅÏ¢ÈçÏÂ£º\n");
-    printf("ĞòºÅ\t ĞÕÃû\t    ID\t\tÄ¿µÄµØ\tº½°àºÅ\t×ùÎ»ºÅ\n");
+       printf("èˆªç­å†…æ‰€æœ‰çš„ä¹˜å®¢ä¿¡æ¯å¦‚ä¸‹ï¼š\n");
+    printf("åºå·\t å§“å\t    ID\t\tç›®çš„åœ°\tèˆªç­å·\tåº§ä½å·\n");
     for(i = 0; i < sum; i++)
         {
             printf("%d:",i+1);
