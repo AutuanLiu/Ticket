@@ -1,4 +1,4 @@
-//¹ØÓÚº½°àµÄ.cÎÄ¼ş
+//å…³äºèˆªç­çš„.cæ–‡ä»¶
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,19 +6,19 @@
 #include "PublicInfo.h"
 
 char flightPrintInfo[COUNT][100];
-//º¯ÊıÉùÃ÷
+//å‡½æ•°å£°æ˜
 void flightSort(Pairl *arr, int lo, int hi, int d);
 int read(char (*pInfo)[100], size_t s, FILE *pf);
 int getline(char *pLine, size_t s, FILE *pf);
 int equals(char *a, char *b);
-//Ê±¼ä½á¹¹Ìå
+//æ—¶é—´ç»“æ„ä½“
 typedef struct
 {
     int hour;
     int minute;
 } Date;
 
-//Ê±¼ä±È½Ï
+//æ—¶é—´æ¯”è¾ƒ
 int dateCompare(Date a, Date b)
 {
     if(a.hour < b.hour)
@@ -36,7 +36,7 @@ int dateCompare(Date a, Date b)
         return 1;
 }
 
-//×ª»¯ÎªÈÕÆÚÀàĞÍ
+//è½¬åŒ–ä¸ºæ—¥æœŸç±»å‹
 Date convert2Date(char *d)
 {
     Date dat;
@@ -49,46 +49,51 @@ Date convert2Date(char *d)
     return dat;
 }
 
-Pairl init()    //Á´±í³õÊ¼»¯
+Pairl init()    //é“¾è¡¨åˆå§‹åŒ–
 {
     Pairl pnew = (Pairl)malloc(sizeof(airl));
     if(pnew != NULL)
-        //ËùÓĞÔªËØ³õÊ¼»¯Îª 0
+        //æ‰€æœ‰å…ƒç´ åˆå§‹åŒ–ä¸º 0
         memset(pnew, 0, sizeof(airl));
     return pnew;
 }
-
-int addPlane(Pairl head, char (*plane)[100])        //Ìí¼Óº½°à
+Pairl nodeInAddPlane = NULL;
+int addPlane(Pairl head, char (*plane)[100])        //æ·»åŠ èˆªç­
 {
     Pairl pnew = init();
     if(pnew == NULL)
         return 0;
-    //¸³Öµ
+    //èµ‹å€¼
     strcpy(pnew->line_num,plane[0]);
     strcpy(pnew->start_time,plane[1]);
     strcpy(pnew->end_time,plane[2]);
     strcpy(pnew->destination,plane[3]);
-    //½«×Ö·û´®×ª»»ÎªÕûĞÍ
+    //å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºæ•´å‹
     pnew->price = atoi(plane[4]);
-    //½«×Ö·û´®×ª»»Îª¸¡µãĞÍ
+    //å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºæµ®ç‚¹å‹
     pnew->discount = atof(plane[5]);
     pnew->total = atoi(plane[6]);
     pnew->left = atoi(plane[7]);
-    pnew->next = head->next;
-    head->next = pnew;
+    if(nodeInAddPlane == NULL)
+        nodeInAddPlane = head;
+
+    nodeInAddPlane->next = pnew;
+    nodeInAddPlane = nodeInAddPlane->next;
     return 1;
 }
 
-Pairl createplaneList(FILE *pf)         //´ÓÎÄ¼şÌí¼ÓËùÓĞº½°àµ½PairlËùÖ¸
+Pairl createplaneList(FILE *pf)         //ä»æ–‡ä»¶æ·»åŠ æ‰€æœ‰èˆªç­åˆ°Pairlæ‰€æŒ‡
 {
     Pairl head = init();
     if(head == NULL)
         return NULL;
-        //¿ªÍ·ÒÑ¾­¶¨Òå
+        //å¼€å¤´å·²ç»å®šä¹‰
     read(flightPrintInfo, COUNT, pf);
-    char splitStr[COUNT][100];//Ö»ÔÚ±¾º¯ÊıÖĞÓĞĞ§
+    char splitStr[COUNT][100];//åªåœ¨æœ¬å‡½æ•°ä¸­æœ‰æ•ˆ
     while( read(splitStr, COUNT, pf) != EOF)
         addPlane(head, splitStr);
+
+    nodeInAddPlane = NULL;
     return head;
 }
 
@@ -100,7 +105,7 @@ int equals(char *a, char *b)
         return 0;
 }
 
-//½»»»Á½¸öÔªËØÎ»ÖÃ
+//äº¤æ¢ä¸¤ä¸ªå…ƒç´ ä½ç½®
 void exchange(Pairl *arr, int i, int j)
 {
     Pairl tmp = arr[i];
@@ -108,7 +113,7 @@ void exchange(Pairl *arr, int i, int j)
     arr[j] = tmp;
 }
 
-//¿ìËÙÅÅĞò£¨°´º½Ïß£©
+//å¿«é€Ÿæ’åºï¼ˆæŒ‰èˆªçº¿ï¼‰
 void flightSort(Pairl *arr, int lo, int hi, int d)
 {
     if(lo >= hi) return;
@@ -137,11 +142,11 @@ void flightSort(Pairl *arr, int lo, int hi, int d)
     flightSort(arr, gt+1, hi, d);
 }
 
-//º½ÏßµÄËÑË÷
+//èˆªçº¿çš„æœç´¢
 int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice)
-    // Ö¸ÕëµÄÖ¸Õë£¨´æ´¢Âú×ãÌõ¼şµÄº½°à£©    //²éÕÒÌõ¼ş //ÄÜ½ÓÊÜµÄ×î´ó¼Û¸ñ£¬ÎŞÒªÇóÎª0
+    // æŒ‡é’ˆçš„æŒ‡é’ˆï¼ˆå­˜å‚¨æ»¡è¶³æ¡ä»¶çš„èˆªç­ï¼‰    //æŸ¥æ‰¾æ¡ä»¶ //èƒ½æ¥å—çš„æœ€å¤§ä»·æ ¼ï¼Œæ— è¦æ±‚ä¸º0
 {
-    int pos = 0;    //Âú×ãÌõ¼şµÄ¸öÊı
+    int pos = 0;    //æ»¡è¶³æ¡ä»¶çš„ä¸ªæ•°
     head = head->next;
     while(head!=NULL)
     {

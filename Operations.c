@@ -106,22 +106,23 @@ void query(char *name)
             perror("guest_info.csv");
             //读入信息并创建链表
         Puser temp,p = createguestList(pf);
-        if(p==NULL)
+        fclose(pf);
+        if(p==NULL) {
             printf("创建链表失败\n");
-        temp=p;
-        while(!(equals(temp->name,name))&&temp->next!=NULL)
-        {
-            temp=temp->next;
+            return;
         }
-        if(temp->next==NULL)
-        printf("对不起，您还没有订票或订票不成功.\n");
-        else
-        {
+        temp=p->next;
+        while(temp != NULL) {
+            if(strcmp(temp->name, name) == 0) {
             printf("您的机票信息为：\n");
             printf("姓名,ID,目的地,航班号,座位号\n");
             printf("%s,%s,%s,%s,%d\n",temp->name,temp->ID,temp->destination,temp->line_num,temp->seat_num);
+            return;
+            }
+
+            temp = temp->next;
         }
-    fclose(pf);
+        printf("对不起，您还没有订票或订票不成功.\n");
 }
 
 //查询航线信息
