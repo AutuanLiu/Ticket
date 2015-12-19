@@ -34,7 +34,7 @@
 ---
 ###程序主要功能以及数据传输流程图
 
-![flowchart](https://github.com/AutuanLiu/Ticket/blob/master/FlowChart.png)    
+![flowchart](https://github.com/AutuanLiu/Ticket/blob/master/images/FlowChart.png)    
 
 ---
 ######Date
