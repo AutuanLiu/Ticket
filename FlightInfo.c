@@ -1,4 +1,4 @@
-//关于航班的.c文件
+﻿//关于航班的.c文件
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,4 +1,4 @@
-//实现各项功能的.c文件
+﻿//实现各项功能的.c文件
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -119,39 +119,38 @@ void query(char *name)
             printf("%s,%s,%s,%s,%d\n",temp->name,temp->ID,temp->destination,temp->line_num,temp->seat_num);
             return;
             }
-
             temp = temp->next;
         }
         printf("对不起，您还没有订票或订票不成功.\n");
+        fclose(pf);
 }
 
 //查询航线信息
-int airInfo(char *airlineNum)
+void  airInfo(char *airlineNum)
 {
     FILE *pf = fopen("flight_info.csv","r");
     if(pf==NULL)
         perror("flight_info.csv");
         //读入信息并创建链表
     Pairl temp,p = createplaneList(pf);
-    if(p==NULL)
+    if(p==NULL){
         printf("创建链表失败\n");
-    temp=p;
-    while(!(equals(temp->line_num,airlineNum))&&temp->next!=NULL)
-    {
-        temp=temp->next;
+        return;
     }
-    if(temp->next==NULL)
-        printf("对不起，不存在该航班号！\n");
-    else
-    {
+    temp=p->next;
+    while(temp != NULL){
+       if(strcmp(temp->line_num,airlineNum) == 0){
         printf("所查找的航线信息为：\n");
         printf("航线号 起飞时间 降落时间 目的地 折扣  机票价格  余票\n");
         printf("%s\t%s\t %s\t %s\t%.2f\t%d\t %d\n",temp->line_num,temp->start_time,
-                        temp->end_time,temp->destination,temp->discount,temp->price,temp->left);
+        temp->end_time,temp->destination,temp->discount,temp->price,temp->left);
+        return;
+            }
+           temp=temp->next;
+       }
+       printf("对不起，不存在该航班号！\n");
+       fclose(pf);
     }
-    fclose(pf);
-    return 1;
-}
 
 //航线是否存在
 int isLineExist(char *airlineNum)

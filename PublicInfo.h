@@ -1,16 +1,16 @@
-
-#define PLANE_COUNT 100 //100ĞĞ
-#define COUNT 8  // 8ÁĞ
+ï»¿
+#define PLANE_COUNT 100 //100è¡Œ
+#define COUNT 8  // 8åˆ—
 #define COLUMN 5
-Pairl init();   //º½ÏßĞÅÏ¢³õÊ¼»¯º¯Êı
-int addPlane(Pairl head, char (*plane)[100]); //Ìí¼Óº½Ïßº¯Êı£¬planeÎªÁĞÖ¸Õë
-Pairl createplaneList(FILE *pf);  //´´½¨¹ØÓÚº½ÏßĞÅÏ¢µÄÎÄ¼ş
-//¶Ôº½Ïß½øĞĞËÑË÷
+Pairl init();   //èˆªçº¿ä¿¡æ¯åˆå§‹åŒ–å‡½æ•°
+int addPlane(Pairl head, char (*plane)[100]); //æ·»åŠ èˆªçº¿å‡½æ•°ï¼Œplaneä¸ºåˆ—æŒ‡é’ˆ
+Pairl createplaneList(FILE *pf);  //åˆ›å»ºå…³äºèˆªçº¿ä¿¡æ¯çš„æ–‡ä»¶
+//å¯¹èˆªçº¿è¿›è¡Œæœç´¢
 int search(Pairl head, Pairl *arr, char (*options)[100], int maxPrice);
 int addguest(Puser head, char (*row)[100]);
 Puser createguestList(FILE *pf) ;
 int check(Puser head, Puser *guestinfo, char (*options)[100]);
-//¶¨ÒåÈ«¾ÖÍâ²¿±äÁ¿
+//å®šä¹‰å…¨å±€å¤–éƒ¨å˜é‡
 extern char flightPrintInfo[COUNT][100];
 extern char userhasTicket[COLUMN][50];
 

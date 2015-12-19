@@ -1,11 +1,11 @@
-//ÎÄ¼ş¶Á¹¦ÄÜ
+ï»¿//æ–‡ä»¶è¯»åŠŸèƒ½
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
 
- //´ÓÎÄ¼şµ±Ç°¹â±ê¿ªÊ¼¶ÁÈëÒ»ĞĞ£¬Óöµ½ÎÄ¼ş½áÎ²·µ»ØEOF£¨End Of File Îª-1 £©
- //¹ØÓÚsize_tÔÚstddef.hÖĞµÄ¶¨Òå
+ //ä»æ–‡ä»¶å½“å‰å…‰æ ‡å¼€å§‹è¯»å…¥ä¸€è¡Œï¼Œé‡åˆ°æ–‡ä»¶ç»“å°¾è¿”å›EOFï¼ˆEnd Of File ä¸º-1 ï¼‰
+ //å…³äºsize_tåœ¨stddef.hä¸­çš„å®šä¹‰
  //typedef unsigned int size_t
 int getline(char *Line, size_t s, FILE *pf)
 {
@@ -21,17 +21,17 @@ int getline(char *Line, size_t s, FILE *pf)
     else
         return 1;
 }
-//¶ÁÈ¡ÎÄ¼ş
+//è¯»å–æ–‡ä»¶
 int read(char (*Info)[100], size_t s, FILE *pf)
-//µ÷ÓÃgetline½«ÎÄ¼şÖĞÒ»ĞĞ¶ÁÈë£¬Í¨¹ı¶ººÅ·Ö¸ô·û½«·Ö¸ô¿ªµÄ×Ö·û´®·Åµ½pinfoÖĞ
+//è°ƒç”¨getlineå°†æ–‡ä»¶ä¸­ä¸€è¡Œè¯»å…¥ï¼Œé€šè¿‡é€—å·åˆ†éš”ç¬¦å°†åˆ†éš”å¼€çš„å­—ç¬¦ä¸²æ”¾åˆ°pinfoä¸­
 {
     char str[100];
     int pos = 0;
     if(getline(str, 100, pf) == EOF)
         return EOF;
-    //¶¨ÒåÖĞ¶Ï±ê¼Ç
+    //å®šä¹‰ä¸­æ–­æ ‡è®°
     char *delims = ",";
-    //strtokº¯Êı·µ»Ø×Ö·û´®strÖĞ½ô½Ó¡°£¬¡±µÄ²¿·ÖµÄÖ¸Õë,
+    //strtokå‡½æ•°è¿”å›å­—ç¬¦ä¸²strä¸­ç´§æ¥â€œï¼Œâ€çš„éƒ¨åˆ†çš„æŒ‡é’ˆ,
     char *result = strtok( str, delims );
     while( result != NULL )
     {

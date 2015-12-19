@@ -1,32 +1,32 @@
-//´æ´¢½á¹¹ÎÄ¼ş
-//×Öµä½á¹¹´æ´¢
-//ÒÑ¹ºÆ±ÓÃ»§ĞÅÏ¢
+ï»¿//å­˜å‚¨ç»“æ„æ–‡ä»¶
+//å­—å…¸ç»“æ„å­˜å‚¨
+//å·²è´­ç¥¨ç”¨æˆ·ä¿¡æ¯
 
 
 struct user
 {
-    char name[9];//¹Ë¿ÍÃû
-    char line_num[8];//º½°àºÅ
-    char destination[20];//Ä¿µÄµØ
-    int seat_num;//×ùÎ»ºÅ
-    char ID[20];//Ö¤¼şºÅ
-    struct user *next;//ÏÂÒ»¸ö½áµã
+    char name[9];//é¡¾å®¢å
+    char line_num[8];//èˆªç­å·
+    char destination[20];//ç›®çš„åœ°
+    int seat_num;//åº§ä½å·
+    char ID[20];//è¯ä»¶å·
+    struct user *next;//ä¸‹ä¸€ä¸ªç»“ç‚¹
 };
 typedef struct user user,*Puser;
 
-//º½ÏßĞÅÏ¢
+//èˆªçº¿ä¿¡æ¯
 struct airline
 {
-    char line_num[8];//º½°àºÅ
-    char plane_num[8];//·É»úºÅ
-    char destination[20];//Ä¿µÄµØ
-    char start_time[10]; //Æğ·ÉµÄÊ±¼ä
-    char end_time[10];  //½µÂäµÄÊ±¼ä
-    int price;  //Æ±¼Û
-    float discount;//ÕÛ¿Û
-    int total;//×ùÎ»×ÜÊı
-    int left;//Ê£Óà×ùÎ»
-    struct airline *next;//ÏÂÒ»¸ö½áµã
+    char line_num[8];//èˆªç­å·
+    char plane_num[8];//é£æœºå·
+    char destination[20];//ç›®çš„åœ°
+    char start_time[10]; //èµ·é£çš„æ—¶é—´
+    char end_time[10];  //é™è½çš„æ—¶é—´
+    int price;  //ç¥¨ä»·
+    float discount;//æŠ˜æ‰£
+    int total;//åº§ä½æ€»æ•°
+    int left;//å‰©ä½™åº§ä½
+    struct airline *next;//ä¸‹ä¸€ä¸ªç»“ç‚¹
 };
 typedef struct airline airl,*Pairl;
 

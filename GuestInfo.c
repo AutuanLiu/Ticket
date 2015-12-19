@@ -1,4 +1,4 @@
-//关于乘客的.c文件
+﻿//关于乘客的.c文件
 #include "adt.h"
 #include <stdio.h>
 #include <stdlib.h>
