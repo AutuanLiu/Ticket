@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>航空售票系统 &mdash; Ticket 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="Ticket 1.0.0 文档" href="#" />
+    <link rel="next" title="说明文档" href="docs/index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="docs/index.html" title="说明文档"
+             accesskey="N">下一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Ticket 1.0.0 文档</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>航空售票系统<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">AutuanLiu(刘彦超)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">&lt;1.0.0&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>Data:     2015/12/19</p>
+<div class="section" id="id2">
+<h2>前言<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="note">
+<h3>note：<a class="headerlink" href="#note" title="永久链接至标题">¶</a></h3>
+<p>A system of airplane tickets Selling and Management.</p>
+</div>
+<div class="section" id="id3">
+<h3>开发工具<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>code::blocks、markdownpad、sphinx</p>
+</div>
+<div class="section" id="id4">
+<h3>流程图制作工具<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>visio以及gliffy</p>
+</div>
+<div class="section" id="id5">
+<h3>开发语言<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>C语言，markdown以及RestructureText文本标记语言</p>
+</div>
+<div class="section" id="id6">
+<h3>程序运行方法<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li>通过访问 <a class="reference external" href="https://github.com/AutuanLiu/Ticket">https://github.com/AutuanLiu/Ticket</a>;</li>
+<li>点击页面的右上方的 Download ZIP ，将其下载到本地;</li>
+<li>在 code::blocks中新建一个工程，将所有 .c  和 .h 文件添加进去;  将 flight_info.csv 和 guest_info.csv 文件放到当前目录下;</li>
+<li>backupdata.csv 文件为备用数据，可以不用理会;</li>
+<li>关于.md文件请使用markdownpad打开，或者notepad打开，查看源码，不影响其阅读;</li>
+<li>同名的HTML文件，可通过浏览器打开.</li>
+<li>推荐使用  code::blocks ,因为该工程在其上开发，<strong>不保证</strong> VC6.0 可以**正常编译运行</li>
+</ol>
+</div>
+<div class="section" id="id7">
+<h3>流程图<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="figure" id="id10">
+<a class="reference internal image-reference" href="_images/FlowChart.png"><img alt="_images/FlowChart.png" src="_images/FlowChart.png" /></a>
+<p class="caption"><span class="caption-text">图1：程序主要功能以及数据传输流程图</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>目录<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="docs/index.html">说明文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/index.html">源代码</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>贡献者列表<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>感谢同组成员的共同努力，我们才赢得了这个项目的完美成功：</p>
+<p>智慧是一切的来源！</p>
+<ol class="arabic">
+<li><dl class="first docutils">
+<dt>刘彦超&lt;<a class="reference external" href="https://github.com/AutuanLiu">https://github.com/AutuanLiu</a>&gt;</dt>
+<dd><p class="first last">邮箱：   &lt;<a class="reference external" href="mailto:AutuanLiu&#37;&#52;&#48;gmail&#46;com">AutuanLiu<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">颜旭&lt; <a class="reference external" href="https://github.com/turingwy">https://github.com/turingwy</a>&gt;</p>
+</li>
+<li><p class="first">袁阳</p>
+</li>
+<li><p class="first">吴青红</p>
+</li>
+</ol>
+<p>2015年12月</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">航空售票系统</a><ul>
+<li><a class="reference internal" href="#id2">前言</a><ul>
+<li><a class="reference internal" href="#note">note：</a></li>
+<li><a class="reference internal" href="#id3">开发工具</a></li>
+<li><a class="reference internal" href="#id4">流程图制作工具</a></li>
+<li><a class="reference internal" href="#id5">开发语言</a></li>
+<li><a class="reference internal" href="#id6">程序运行方法</a></li>
+<li><a class="reference internal" href="#id7">流程图</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8">目录</a></li>
+<li><a class="reference internal" href="#id9">贡献者列表</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="docs/index.html"
+                        title="下一章">说明文档</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="docs/index.html" title="说明文档"
+             >下一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Ticket 1.0.0 文档</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; 版权所有 2015, 刘彦超.
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3 创建。
+    </div>
+  </body>
+</html>

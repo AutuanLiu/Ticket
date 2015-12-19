@@ -1,0 +1,1078 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>&lt;no title&gt; &mdash; Ticket 1.0.0 文档</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Ticket 1.0.0 文档" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ticket 1.0.0 文档</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>Reader.c 用于读取文件</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>
+</pre></div>
+</td></tr></table></div>
+<p>Writer.c 用于写入文件</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;string.h&gt;</span>
+<span class="cp">#include &quot;adt.h&quot;</span>
+<span class="c1">//写入客户买票信息</span>
+<span class="kt">void</span>  <span class="nf">writefile</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fout</span><span class="p">;</span>
+    <span class="n">fout</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;ab&quot;</span><span class="p">);</span>
+    <span class="c1">//在末尾追加</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">fout</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">fout</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//写入新航班信息</span>
+<span class="kt">void</span> <span class="nf">writefilenew</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fout</span><span class="p">;</span>
+    <span class="n">fout</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;ab&quot;</span><span class="p">);</span>
+    <span class="c1">//在末尾追加</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">fout</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">fout</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//航班信息转化为字符串</span>
+<span class="kt">void</span> <span class="nf">Pairl2String</span><span class="p">(</span><span class="n">Pairl</span> <span class="n">p</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+    <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">start_time</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">end_time</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="kt">char</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">500</span><span class="p">];</span>
+            <span class="c1">//发到缓冲区tmp</span>
+            <span class="n">sprintf</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">price</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">tmp</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">sprintf</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s">&quot;%.2f&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">discount</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">tmp</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">sprintf</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">total</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">tmp</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">sprintf</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">tmp</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+                <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">writePairl</span><span class="p">(</span><span class="n">Pairl</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="mi">8000</span><span class="p">];</span>
+    <span class="n">Pairl2String</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="c1">//若果存在，先删除，在重写</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">access</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">remove</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">);</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="s">&quot;航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp1</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;ab&quot;</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp1</span><span class="p">,</span> <span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">//</span>
+<span class="c1">//乘客信息字符化</span>
+<span class="kt">void</span> <span class="nf">guest2String</span><span class="p">(</span><span class="n">Puser</span> <span class="n">p</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+    <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">);</span> <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+            <span class="kt">char</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">500</span><span class="p">];</span>
+            <span class="c1">//发到缓冲区tmp</span>
+            <span class="n">sprintf</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">seat_num</span><span class="p">);</span>
+            <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">tmp</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+                <span class="n">strcat</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">writeguest</span><span class="p">(</span><span class="n">Puser</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="mi">5000</span><span class="p">];</span>
+    <span class="n">guest2String</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="c1">//若果存在，先删除，在重写</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">access</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">remove</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">);</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="s">&quot;姓名,ID,目的地,航班号,座位号</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>updateFile.c 用于更新文件</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &quot;adt.h&quot;</span>
+<span class="c1">//更新航班信息</span>
+<span class="n">Pairl</span> <span class="nf">updateplane</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">airlineNum</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flag</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">);</span>
+        <span class="c1">//读入信息并创建链表</span>
+    <span class="n">Pairl</span> <span class="n">temp</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">createplaneList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;创建链表失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">temp</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">temp</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">airlineNum</span><span class="p">,</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">temp</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">temp</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//更新客户信息</span>
+<span class="n">Puser</span> <span class="nf">updateguest</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">);</span>
+            <span class="c1">//读入信息并创建链表</span>
+        <span class="n">Puser</span> <span class="n">q</span><span class="p">,</span><span class="n">temp</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">createguestList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+        <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;创建链表失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">q</span> <span class="o">=</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                <span class="n">free</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">);</span>
+                <span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span>
+                <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>adt.h 用于数据结构的存储</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre>
+<span class="cp">#define PLANE_COUNT 100 </span><span class="c1">//100行</span>
+<span class="cp">#define COUNT 8  </span><span class="c1">// 8列</span>
+<span class="cp">#define COLUMN 5</span>
+<span class="n">Pairl</span> <span class="nf">init</span><span class="p">();</span>   <span class="c1">//航线信息初始化函数</span>
+<span class="kt">int</span> <span class="nf">addPlane</span><span class="p">(</span><span class="n">Pairl</span> <span class="n">head</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">plane</span><span class="p">)[</span><span class="mi">100</span><span class="p">]);</span> <span class="c1">//添加航线函数，plane为列指针</span>
+<span class="n">Pairl</span> <span class="nf">createplaneList</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">);</span>  <span class="c1">//创建关于航线信息的文件</span>
+<span class="c1">//对航线进行搜索</span>
+<span class="kt">int</span> <span class="nf">search</span><span class="p">(</span><span class="n">Pairl</span> <span class="n">head</span><span class="p">,</span> <span class="n">Pairl</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">options</span><span class="p">)[</span><span class="mi">100</span><span class="p">],</span> <span class="kt">int</span> <span class="n">maxPrice</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">addguest</span><span class="p">(</span><span class="n">Puser</span> <span class="n">head</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">)[</span><span class="mi">100</span><span class="p">]);</span>
+<span class="n">Puser</span> <span class="nf">createguestList</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">)</span> <span class="p">;</span>
+<span class="kt">int</span> <span class="nf">check</span><span class="p">(</span><span class="n">Puser</span> <span class="n">head</span><span class="p">,</span> <span class="n">Puser</span> <span class="o">*</span><span class="n">guestinfo</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">options</span><span class="p">)[</span><span class="mi">100</span><span class="p">]);</span>
+<span class="c1">//定义全局外部变量</span>
+<span class="k">extern</span> <span class="kt">char</span> <span class="n">flightPrintInfo</span><span class="p">[</span><span class="n">COUNT</span><span class="p">][</span><span class="mi">100</span><span class="p">];</span>
+<span class="k">extern</span> <span class="kt">char</span> <span class="n">userhasTicket</span><span class="p">[</span><span class="n">COLUMN</span><span class="p">][</span><span class="mi">50</span><span class="p">];</span>
+
+</pre></div>
+</td></tr></table></div>
+<p>Operations.c用于各类的功能实现</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//实现各项功能的.c文件</span>
+<span class="cp">#include &quot;adt.h&quot;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &quot;PublicInfo.h&quot;</span>
+<span class="kt">char</span> <span class="n">userhasTicket</span><span class="p">[</span><span class="n">COLUMN</span><span class="p">][</span><span class="mi">50</span><span class="p">];</span>
+<span class="kt">char</span> <span class="n">seatNum2str</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<span class="kt">int</span> <span class="nf">buyTickets</span><span class="p">()</span>   <span class="c1">//买票</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">);</span>
+    <span class="n">Pairl</span> <span class="n">p</span> <span class="o">=</span> <span class="n">createplaneList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="n">Pairl</span> <span class="n">air</span><span class="p">[</span><span class="mi">9</span><span class="p">];</span> <span class="c1">//指针数组</span>
+    <span class="kt">char</span> <span class="n">options</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">100</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">ginfo</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">50</span><span class="p">],</span><span class="n">guestInfo</span><span class="p">[</span><span class="mi">500</span><span class="p">];</span> <span class="c1">//当前客户信息</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">max</span><span class="p">,</span><span class="n">chioces</span><span class="p">,</span><span class="n">number</span><span class="p">,</span><span class="n">seatNum</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入你的姓名与证件号(以enter或空格隔开)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span><span class="n">ginfo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ginfo</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入你要到达的目的地、最早起飞时间，最晚降落时间，最大价格(以enter或空格隔开)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s%s%s%d&quot;</span><span class="p">,</span><span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">options</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">options</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="o">&amp;</span><span class="n">max</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请确认你的购票信息</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;姓名：%s</span><span class="se">\n</span><span class="s">证件号：%s</span><span class="se">\n</span><span class="s">目的地：%s</span><span class="se">\n</span><span class="s">最早起飞时间：%s</span><span class="se">\n</span><span class="s">最晚降落时间：%s</span><span class="se">\n</span><span class="s">最大价格：%d</span><span class="se">\n</span><span class="s">&quot;</span>
+           <span class="p">,</span><span class="n">ginfo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ginfo</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">options</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">options</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">max</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;是(0)否(1)有错误？ &quot;</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">chioces</span><span class="p">);</span>
+    <span class="k">switch</span><span class="p">(</span><span class="n">chioces</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="p">{</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;cls&quot;</span><span class="p">);</span><span class="n">buyTickets</span><span class="p">();</span><span class="k">break</span><span class="p">;}</span>
+        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+            <span class="p">{</span>
+                <span class="kt">int</span> <span class="n">sum</span><span class="o">=</span><span class="n">search</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">air</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">max</span><span class="p">);</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">sum</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;对不起，没有满足条件的航班!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;满足条件的航班如下：</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;序号   航线号 起飞时间 降落时间 折扣 机票价格  余票</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d:&quot;</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+                        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s">%.2f</span><span class="se">\t</span><span class="s">%d</span><span class="se">\t</span><span class="s">%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">air</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">air</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">start_time</span><span class="p">,</span>
+                        <span class="n">air</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">end_time</span><span class="p">,</span><span class="n">air</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">discount</span><span class="p">,</span><span class="n">air</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">price</span><span class="p">,</span><span class="n">air</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入你要购买航班的对应序号: &quot;</span><span class="p">);</span>
+                    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">number</span><span class="p">);</span>
+                    <span class="n">seatNum</span><span class="o">=</span><span class="n">air</span><span class="p">[</span><span class="n">number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">total</span><span class="o">-</span><span class="n">air</span><span class="p">[</span><span class="n">number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;您在%s次航班的购票业务成功，您的机票的座位号为：%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">air</span><span class="p">[</span><span class="n">number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">seatNum</span><span class="p">);</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;正在为您办理，请稍后 . . .</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="n">itoa</span><span class="p">(</span><span class="n">seatNum</span><span class="p">,</span><span class="n">seatNum2str</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+                    <span class="c1">//把购买机票的用户信息存入文件</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="n">ginfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="n">ginfo</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="n">air</span><span class="p">[</span><span class="n">number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="n">seatNum2str</span><span class="p">);</span>
+                    <span class="n">writefile</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                    <span class="c1">//修改余票信息</span>
+                    <span class="n">Pairl</span> <span class="n">new</span><span class="o">=</span><span class="n">updateplane</span><span class="p">(</span><span class="n">air</span><span class="p">[</span><span class="n">number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+                    <span class="n">writePairl</span><span class="p">(</span><span class="n">new</span><span class="p">);</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;手续办理成功，欢迎下次光临，乘机愉快！</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//退票</span>
+<span class="kt">void</span> <span class="nf">refund</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Pairl</span> <span class="n">p1</span><span class="p">;</span>
+    <span class="n">Puser</span> <span class="n">p2</span><span class="p">;</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="n">Puser</span> <span class="n">temp</span><span class="p">;</span>
+    <span class="n">Puser</span> <span class="n">p</span> <span class="o">=</span> <span class="n">createguestList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+
+    <span class="n">temp</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">temp</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">temp</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;未查询到顾客订票信息&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">p1</span><span class="o">=</span><span class="n">updateplane</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">writePairl</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+    <span class="n">p2</span><span class="o">=</span><span class="n">updateguest</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="n">writeguest</span><span class="p">(</span><span class="n">p2</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;退票成功！</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//根据姓名查询订票信息</span>
+<span class="kt">void</span> <span class="nf">query</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">);</span>
+            <span class="c1">//读入信息并创建链表</span>
+        <span class="n">Puser</span> <span class="n">temp</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">createguestList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+        <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;创建链表失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">temp</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;您的机票信息为：</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;姓名,ID,目的地,航班号,座位号</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s,%s,%s,%s,%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">seat_num</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;对不起，您还没有订票或订票不成功.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//查询航线信息</span>
+<span class="kt">void</span>  <span class="nf">airInfo</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">airlineNum</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">);</span>
+        <span class="c1">//读入信息并创建链表</span>
+    <span class="n">Pairl</span> <span class="n">temp</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">createplaneList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="nb">NULL</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;创建链表失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">temp</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">temp</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">){</span>
+       <span class="k">if</span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">airlineNum</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;所查找的航线信息为：</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;航线号 起飞时间 降落时间 目的地 折扣  机票价格  余票</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s"> %s</span><span class="se">\t</span><span class="s"> %s</span><span class="se">\t</span><span class="s">%.2f</span><span class="se">\t</span><span class="s">%d</span><span class="se">\t</span><span class="s"> %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">start_time</span><span class="p">,</span>
+        <span class="n">temp</span><span class="o">-&gt;</span><span class="n">end_time</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">discount</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">price</span><span class="p">,</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+           <span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+       <span class="p">}</span>
+       <span class="n">printf</span><span class="p">(</span><span class="s">&quot;对不起，不存在该航班号！</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+       <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="c1">//航线是否存在</span>
+<span class="kt">int</span> <span class="nf">isLineExist</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">airlineNum</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">);</span>
+        <span class="c1">//读入信息并创建链表</span>
+    <span class="n">Pairl</span> <span class="n">temp</span><span class="p">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">createplaneList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;创建链表失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">temp</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">equals</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">airlineNum</span><span class="p">))</span><span class="o">&amp;&amp;</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//不存在为 0</span>
+    <span class="k">else</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//查询已卖机票</span>
+<span class="c1">//have bugs  and need to fix</span>
+<span class="kt">char</span> <span class="o">*</span><span class="nf">selled</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//从guest-info读取即可</span>
+
+    <span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">);</span>
+    <span class="n">Puser</span> <span class="n">pall</span> <span class="o">=</span> <span class="n">createguestList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="c1">//遍历航班信息</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;姓名,ID,目的地,航班号,座位号</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">guest2String</span><span class="p">(</span><span class="n">pall</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//查询所有的航班</span>
+<span class="kt">void</span> <span class="nf">queryp</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;flight_info.csv&quot;</span><span class="p">);</span>
+    <span class="n">Pairl</span> <span class="n">pall</span> <span class="o">=</span> <span class="n">createplaneList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="c1">//遍历航班信息</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">Pairl2String</span><span class="p">(</span><span class="n">pall</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+    <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+</pre></div>
+</td></tr></table></div>
+<p>Primary.c用于写入主函数，调用各项功能</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//含有main方法的.c文件</span>
+<span class="cp">#include &quot;adt.h&quot;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &quot;PublicInfo.h&quot;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\t</span><span class="s">**********     欢迎进入广州白云机场服务系统  </span><span class="se">\t</span><span class="s">*********</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********                 菜单            ***********</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         1   购买机票            ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         2 查询已购机票          ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         3 查询航线信息          ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         4 查询售出机票          ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         5     退票              ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         6   刷新屏幕            ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         7  增加新航班           ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         8 机场所有航班的信息    ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         9 查看某航班上的乘客信息***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t</span><span class="s">***********         10   退出系统           ***********</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">choice</span><span class="p">;</span>
+	<span class="k">while</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span>
+ <span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入你要进行操作所对应的序号：(1~10) &quot;</span><span class="p">);</span>
+	<span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">choice</span><span class="p">);</span>
+	<span class="k">switch</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span>
+	<span class="p">{</span>
+        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+            <span class="p">{</span>
+                <span class="n">buyTickets</span><span class="p">();</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+            <span class="p">{</span>
+                <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入您的姓名： &quot;</span><span class="p">);</span>
+                <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">name</span><span class="p">);</span>
+                <span class="n">query</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+            <span class="p">{</span>
+                <span class="kt">char</span> <span class="n">airNum</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入航班号： &quot;</span><span class="p">);</span>
+                <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">airNum</span><span class="p">);</span>
+                <span class="n">airInfo</span><span class="p">(</span><span class="n">airNum</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+            <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;所有顾客信息如下：</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">selled</span><span class="p">();</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">5</span><span class="o">:</span>
+            <span class="p">{</span>
+                <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入姓名： &quot;</span><span class="p">);</span>
+                <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">name</span><span class="p">);</span>
+                <span class="n">refund</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">6</span><span class="o">:</span>
+            <span class="p">{</span>
+              <span class="n">system</span><span class="p">(</span><span class="s">&quot;cls&quot;</span><span class="p">);</span>
+              <span class="n">main</span><span class="p">();</span>
+              <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">7</span><span class="o">:</span>
+            <span class="p">{</span>
+              <span class="kt">char</span> <span class="n">s1</span><span class="p">[</span><span class="mi">500</span><span class="p">],</span><span class="n">s</span><span class="p">[</span><span class="mi">500</span><span class="p">];</span>
+              <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入航班号: &quot;</span><span class="p">);</span>
+              <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">s1</span><span class="p">);</span>
+              <span class="k">if</span><span class="p">(</span><span class="n">isLineExist</span><span class="p">(</span><span class="n">s1</span><span class="p">))</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;对不起,该航班信息已经存在,请添加其他航班.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+              <span class="k">else</span>
+              <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量（以英文&#39;,&#39;分隔）</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+                <span class="n">strcat</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+                <span class="n">strcat</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+                <span class="n">writefilenew</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
+                <span class="n">writefilenew</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;添加航班成功！</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+              <span class="p">}</span>
+              <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">8</span><span class="o">:</span>
+            <span class="p">{</span>
+               <span class="n">printf</span><span class="p">(</span><span class="s">&quot;所有的航班信息如下：</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+               <span class="c1">//printf(&quot;%s&quot;,&quot;航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量\n&quot;);</span>
+               <span class="n">queryp</span><span class="p">();</span>
+               <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">9</span><span class="o">:</span>
+            <span class="p">{</span>
+               <span class="n">allguest</span><span class="p">();</span>
+               <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">10</span><span class="o">:</span>
+              <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+</pre></div>
+</td></tr></table></div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/src/source.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ticket 1.0.0 文档</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; 版权所有 2015, 刘彦超.
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3 创建。
+    </div>
+  </body>
+</html>
