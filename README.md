@@ -7,7 +7,7 @@
 ---
 ###开发工具
 * 开发工具   
->`code::blocks`和`markdownpad`
+>`code::blocks`和`markdownpad`、`sphinx`
    
 * 流程图制作工具
 >`visio`以及`gliffy`     
