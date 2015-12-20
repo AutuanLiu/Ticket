@@ -7,11 +7,9 @@
 ---
 ###开发工具
 * 开发工具   
-<<<<<<< HEAD
 >`code::blocks`和`markdownpad`、`sphinx`
 =======
 >`code::blocks`和`markdownpad`，sphinx
->>>>>>> 3ac7ba445f17cccab9cde07824fd765299a2c411
    
 * 流程图制作工具
 >`visio`以及`gliffy`     
