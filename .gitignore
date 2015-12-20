@@ -1,3 +1,7 @@
+#ingore ssh files
+ssh
+*.pub
+
 # Object files
 *.o
 *.ko
