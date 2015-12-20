@@ -1,13 +1,17 @@
-# Ticket     
+﻿# Ticket     
 
 ****
-
+:airplane:  :grin:
 **A system of airplane tickets Selling and Management.** 
 ---  
 ---
 ###开发工具
 * 开发工具   
+<<<<<<< HEAD
 >`code::blocks`和`markdownpad`、`sphinx`
+=======
+>`code::blocks`和`markdownpad`，sphinx
+>>>>>>> 3ac7ba445f17cccab9cde07824fd765299a2c411
    
 * 流程图制作工具
 >`visio`以及`gliffy`     
@@ -34,8 +38,9 @@
 ---
 ###程序主要功能以及数据传输流程图
 
-![flowchart](https://github.com/AutuanLiu/Ticket/blob/master/FlowChart.png)    
+![flowchart](https://github.com/AutuanLiu/Ticket/blob/master/images/FlowChart.png)    
 
 ---
 ######Date
 2015年11月25日
+:grin:
