@@ -1,4 +1,0 @@
-# Summary
-
-* Program design report
-

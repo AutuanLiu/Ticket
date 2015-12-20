@@ -25,8 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Ticket 1.0.0 文档" href="../index.html" />
-    <link rel="next" title="&lt;no title&gt;" href="../docs/index.html" />
-    <link rel="prev" title="航空售票系统" href="../index.html" /> 
+    <link rel="prev" title="说明文档" href="../docs/index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,10 +35,7 @@
           <a href="../genindex.html" title="总目录"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="../docs/index.html" title="&lt;no title&gt;"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="../index.html" title="航空售票系统"
+          <a href="../docs/index.html" title="说明文档"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Ticket 1.0.0 文档</a> &raquo;</li> 
       </ul>
@@ -53,55 +49,97 @@
   <div class="section" id="id1">
 <h1>源代码<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>Reader.c 用于读取文件</p>
-<div class="highlight-python"><div class="highlight"><pre>//文件读功能
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;stddef.h&gt;
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//文件读功能</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &lt;string.h&gt;</span>
+<span class="cp">#include &lt;stddef.h&gt;</span>
 
- //从文件当前光标开始读入一行，遇到文件结尾返回EOF（End Of File 为-1 ）
- //关于size_t在stddef.h中的定义
- //typedef unsigned int size_t
-int getline(char *Line, size_t s, FILE *pf)
-{
-    char c;
-    int pos = 0;
-    while((c = fgetc(pf)) != EOF &amp;&amp; c!= &#39;\n&#39; &amp;&amp; pos &lt; s)
-    {
-        Line[pos++] = c;
-    }
-    Line[pos] = &#39;\0&#39;;
-    if(c == EOF)
-        return EOF;
-    else
-        return 1;
-}
-//读取文件
-int read(char (*Info)[100], size_t s, FILE *pf)
-//调用getline将文件中一行读入，通过逗号分隔符将分隔开的字符串放到pinfo中
-{
-    char str[100];
-    int pos = 0;
-    if(getline(str, 100, pf) == EOF)
-        return EOF;
-    //定义中断标记
-    char *delims = &quot;,&quot;;
-    //strtok函数返回字符串str中紧接“，”的部分的指针,
-    char *result = strtok( str, delims );
-    while( result != NULL )
-    {
-        strcpy(Info[pos++], result);
-        if(pos &gt;= s)
-            break;
-        result = strtok( NULL, delims );
-    }
-    return 1;
-}
+ <span class="c1">//从文件当前光标开始读入一行，遇到文件结尾返回EOF（End Of File 为-1 ）</span>
+ <span class="c1">//关于size_t在stddef.h中的定义</span>
+ <span class="c1">//typedef unsigned int size_t</span>
+<span class="kt">int</span> <span class="nf">getline</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">Line</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">s</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">((</span><span class="n">c</span> <span class="o">=</span> <span class="n">fgetc</span><span class="p">(</span><span class="n">pf</span><span class="p">))</span> <span class="o">!=</span> <span class="n">EOF</span> <span class="o">&amp;&amp;</span> <span class="n">c</span><span class="o">!=</span> <span class="sc">&#39;\n&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Line</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Line</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EOF</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//读取文件</span>
+<span class="kt">int</span> <span class="nf">read</span><span class="p">(</span><span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">Info</span><span class="p">)[</span><span class="mi">100</span><span class="p">],</span> <span class="kt">size_t</span> <span class="n">s</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">)</span>
+<span class="c1">//调用getline将文件中一行读入，通过逗号分隔符将分隔开的字符串放到pinfo中</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">getline</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">pf</span><span class="p">)</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EOF</span><span class="p">;</span>
+    <span class="c1">//定义中断标记</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">delims</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">;</span>
+    <span class="c1">//strtok函数返回字符串str中紧接“，”的部分的指针,</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="n">strtok</span><span class="p">(</span> <span class="n">str</span><span class="p">,</span> <span class="n">delims</span> <span class="p">);</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">result</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">strcpy</span><span class="p">(</span><span class="n">Info</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">],</span> <span class="n">result</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pos</span> <span class="o">&gt;=</span> <span class="n">s</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">strtok</span><span class="p">(</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">delims</span> <span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
 
-</pre></div>
-</div>
-<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>
 </pre></div>
 </td></tr></table></div>
 <p>Writer.c 用于写入文件</p>
@@ -436,6 +474,72 @@ int read(char (*Info)[100], size_t s, FILE *pf)
 13
 14
 15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//存储结构文件</span>
+<span class="c1">//用户信息</span>
+
+
+<span class="k">struct</span> <span class="n">user</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">9</span><span class="p">];</span><span class="c1">//顾客名</span>
+    <span class="kt">char</span> <span class="n">line_num</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="c1">//航班号</span>
+    <span class="kt">char</span> <span class="n">destination</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span><span class="c1">//目的地</span>
+    <span class="kt">int</span> <span class="n">seat_num</span><span class="p">;</span><span class="c1">//座位号</span>
+    <span class="kt">char</span> <span class="n">ID</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span><span class="c1">//证件号</span>
+    <span class="k">struct</span> <span class="n">user</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span><span class="c1">//下一个结点</span>
+<span class="p">};</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">user</span> <span class="n">user</span><span class="p">,</span><span class="o">*</span><span class="n">Puser</span><span class="p">;</span>
+
+<span class="c1">//航线信息</span>
+<span class="k">struct</span> <span class="n">airline</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">line_num</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="c1">//航班号</span>
+    <span class="kt">char</span> <span class="n">plane_num</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="c1">//飞机号</span>
+    <span class="kt">char</span> <span class="n">destination</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span><span class="c1">//目的地</span>
+    <span class="kt">char</span> <span class="n">start_time</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">//起飞的时间</span>
+    <span class="kt">char</span> <span class="n">end_time</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>  <span class="c1">//降落的时间</span>
+    <span class="kt">int</span> <span class="n">price</span><span class="p">;</span>  <span class="c1">//票价</span>
+    <span class="kt">float</span> <span class="n">discount</span><span class="p">;</span><span class="c1">//折扣</span>
+    <span class="kt">int</span> <span class="n">total</span><span class="p">;</span><span class="c1">//座位总数</span>
+    <span class="kt">int</span> <span class="n">left</span><span class="p">;</span><span class="c1">//剩余座位</span>
+    <span class="k">struct</span> <span class="n">airline</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span><span class="c1">//下一个结点</span>
+<span class="p">};</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">airline</span> <span class="n">airl</span><span class="p">,</span><span class="o">*</span><span class="n">Pairl</span><span class="p">;</span>
+
+
+</pre></div>
+</td></tr></table></div>
+<p>PublicInfo.h用于引入外部或全局变量</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
 16</pre></div></td><td class="code"><div class="highlight"><pre>
 <span class="cp">#define PLANE_COUNT 100 </span><span class="c1">//100行</span>
 <span class="cp">#define COUNT 8  </span><span class="c1">// 8列</span>
@@ -452,6 +556,698 @@ int read(char (*Info)[100], size_t s, FILE *pf)
 <span class="k">extern</span> <span class="kt">char</span> <span class="n">flightPrintInfo</span><span class="p">[</span><span class="n">COUNT</span><span class="p">][</span><span class="mi">100</span><span class="p">];</span>
 <span class="k">extern</span> <span class="kt">char</span> <span class="n">userhasTicket</span><span class="p">[</span><span class="n">COLUMN</span><span class="p">][</span><span class="mi">50</span><span class="p">];</span>
 
+</pre></div>
+</td></tr></table></div>
+<p>FlightInfo.c用于航班信息</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//关于航班的.c文件</span>
+<span class="cp">#include &quot;adt.h&quot;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &lt;memory.h&gt;</span>
+<span class="cp">#include &quot;PublicInfo.h&quot;</span>
+
+<span class="kt">char</span> <span class="n">flightPrintInfo</span><span class="p">[</span><span class="n">COUNT</span><span class="p">][</span><span class="mi">100</span><span class="p">];</span>
+<span class="c1">//函数声明</span>
+<span class="kt">void</span> <span class="nf">flightSort</span><span class="p">(</span><span class="n">Pairl</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">read</span><span class="p">(</span><span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">pInfo</span><span class="p">)[</span><span class="mi">100</span><span class="p">],</span> <span class="kt">size_t</span> <span class="n">s</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">getline</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pLine</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">s</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">equals</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">);</span>
+<span class="c1">//时间结构体</span>
+<span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">hour</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">minute</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Date</span><span class="p">;</span>
+
+<span class="c1">//时间比较</span>
+<span class="kt">int</span> <span class="nf">dateCompare</span><span class="p">(</span><span class="n">Date</span> <span class="n">a</span><span class="p">,</span> <span class="n">Date</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">hour</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">hour</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">hour</span> <span class="o">==</span> <span class="n">b</span><span class="p">.</span><span class="n">hour</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">minute</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">minute</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">minute</span> <span class="o">==</span> <span class="n">b</span><span class="p">.</span><span class="n">minute</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//转化为日期类型</span>
+<span class="n">Date</span> <span class="nf">convert2Date</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Date</span> <span class="n">dat</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">copy</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">nowSplit</span> <span class="o">=</span> <span class="n">strtok</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+    <span class="n">dat</span><span class="p">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">nowSplit</span><span class="p">);</span>
+    <span class="n">nowSplit</span> <span class="o">=</span> <span class="n">strtok</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+    <span class="n">dat</span><span class="p">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">nowSplit</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">dat</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Pairl</span> <span class="nf">init</span><span class="p">()</span>    <span class="c1">//链表初始化</span>
+<span class="p">{</span>
+    <span class="n">Pairl</span> <span class="n">pnew</span> <span class="o">=</span> <span class="p">(</span><span class="n">Pairl</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">airl</span><span class="p">));</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pnew</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="c1">//所有元素初始化为 0</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">pnew</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">airl</span><span class="p">));</span>
+    <span class="k">return</span> <span class="n">pnew</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">Pairl</span> <span class="n">nodeInAddPlane</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">addPlane</span><span class="p">(</span><span class="n">Pairl</span> <span class="n">head</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">plane</span><span class="p">)[</span><span class="mi">100</span><span class="p">])</span>        <span class="c1">//添加航班</span>
+<span class="p">{</span>
+    <span class="n">Pairl</span> <span class="n">pnew</span> <span class="o">=</span> <span class="n">init</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pnew</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">//赋值</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">plane</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">start_time</span><span class="p">,</span><span class="n">plane</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">end_time</span><span class="p">,</span><span class="n">plane</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">,</span><span class="n">plane</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+    <span class="c1">//将字符串转换为整型</span>
+    <span class="n">pnew</span><span class="o">-&gt;</span><span class="n">price</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">plane</span><span class="p">[</span><span class="mi">4</span><span class="p">]);</span>
+    <span class="c1">//将字符串转换为浮点型</span>
+    <span class="n">pnew</span><span class="o">-&gt;</span><span class="n">discount</span> <span class="o">=</span> <span class="n">atof</span><span class="p">(</span><span class="n">plane</span><span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
+    <span class="n">pnew</span><span class="o">-&gt;</span><span class="n">total</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">plane</span><span class="p">[</span><span class="mi">6</span><span class="p">]);</span>
+    <span class="n">pnew</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">plane</span><span class="p">[</span><span class="mi">7</span><span class="p">]);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">nodeInAddPlane</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">nodeInAddPlane</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+
+    <span class="n">nodeInAddPlane</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">pnew</span><span class="p">;</span>
+    <span class="n">nodeInAddPlane</span> <span class="o">=</span> <span class="n">nodeInAddPlane</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Pairl</span> <span class="nf">createplaneList</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">)</span>         <span class="c1">//从文件添加所有航班到Pairl所指</span>
+<span class="p">{</span>
+    <span class="n">Pairl</span> <span class="n">head</span> <span class="o">=</span> <span class="n">init</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">head</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="c1">//开头已经定义</span>
+    <span class="n">read</span><span class="p">(</span><span class="n">flightPrintInfo</span><span class="p">,</span> <span class="n">COUNT</span><span class="p">,</span> <span class="n">pf</span><span class="p">);</span>
+    <span class="kt">char</span> <span class="n">splitStr</span><span class="p">[</span><span class="n">COUNT</span><span class="p">][</span><span class="mi">100</span><span class="p">];</span><span class="c1">//只在本函数中有效</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">read</span><span class="p">(</span><span class="n">splitStr</span><span class="p">,</span> <span class="n">COUNT</span><span class="p">,</span> <span class="n">pf</span><span class="p">)</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">)</span>
+        <span class="n">addPlane</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">splitStr</span><span class="p">);</span>
+
+    <span class="n">nodeInAddPlane</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">equals</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span> <span class="o">||</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//交换两个元素位置</span>
+<span class="kt">void</span> <span class="nf">exchange</span><span class="p">(</span><span class="n">Pairl</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Pairl</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+    <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//快速排序（按航线）</span>
+<span class="kt">void</span> <span class="nf">flightSort</span><span class="p">(</span><span class="n">Pairl</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hi</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">lo</span> <span class="o">&gt;=</span> <span class="n">hi</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">lt</span> <span class="o">=</span> <span class="n">lo</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">gt</span> <span class="o">=</span> <span class="n">hi</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">lo</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">[</span><span class="n">d</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">lt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">gt</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">now</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">[</span><span class="n">d</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">now</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">exchange</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">lt</span><span class="o">++</span><span class="p">,</span> <span class="n">i</span><span class="o">++</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">now</span> <span class="o">&gt;</span> <span class="n">v</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">exchange</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">gt</span><span class="o">--</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">flightSort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">lt</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">flightSort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">lt</span><span class="p">,</span> <span class="n">gt</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">flightSort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">gt</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//航线的搜索</span>
+<span class="kt">int</span> <span class="nf">search</span><span class="p">(</span><span class="n">Pairl</span> <span class="n">head</span><span class="p">,</span> <span class="n">Pairl</span> <span class="o">*</span><span class="n">arr</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">options</span><span class="p">)[</span><span class="mi">100</span><span class="p">],</span> <span class="kt">int</span> <span class="n">maxPrice</span><span class="p">)</span>
+    <span class="c1">// 指针的指针（存储满足条件的航班）    //查找条件 //能接受的最大价格，无要求为0</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="c1">//满足条件的个数</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">head</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">equals</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="p">{</span>
+            <span class="n">Date</span> <span class="n">flightStartDate</span> <span class="o">=</span> <span class="n">convert2Date</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">start_time</span><span class="p">);</span>
+            <span class="n">Date</span> <span class="n">flightEndDate</span> <span class="o">=</span> <span class="n">convert2Date</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">end_time</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">options</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;\0&#39;</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Date</span> <span class="n">userStartDate</span> <span class="o">=</span> <span class="n">convert2Date</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+                <span class="n">Date</span> <span class="n">userEndDate</span> <span class="o">=</span> <span class="n">convert2Date</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">dateCompare</span><span class="p">(</span><span class="n">flightStartDate</span><span class="p">,</span><span class="n">userStartDate</span><span class="p">)</span> <span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">dateCompare</span><span class="p">(</span><span class="n">userEndDate</span><span class="p">,</span> <span class="n">flightEndDate</span><span class="p">)</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="sc">&#39;\0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">options</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Date</span> <span class="n">userStartDate</span> <span class="o">=</span> <span class="n">convert2Date</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">dateCompare</span><span class="p">(</span><span class="n">flightStartDate</span><span class="p">,</span><span class="n">userStartDate</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">Date</span> <span class="n">userEndDate</span> <span class="o">=</span> <span class="n">convert2Date</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">dateCompare</span><span class="p">(</span><span class="n">userEndDate</span><span class="p">,</span> <span class="n">flightStartDate</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">maxPrice</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">maxPrice</span> <span class="o">&lt;</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">price</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">flightSort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">pos</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+
+
+
+</pre></div>
+</td></tr></table></div>
+<p>GuestInfo.c用于客户信息</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//关于乘客的.c文件</span>
+<span class="cp">#include &quot;adt.h&quot;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &lt;memory.h&gt;</span>
+<span class="cp">#include &quot;PublicInfo.h&quot;</span>
+<span class="kt">char</span> <span class="n">userhasTicket</span><span class="p">[</span><span class="n">COLUMN</span><span class="p">][</span><span class="mi">50</span><span class="p">];</span>
+<span class="c1">//函数声明</span>
+<span class="kt">void</span> <span class="nf">listSort</span><span class="p">(</span><span class="n">Puser</span> <span class="n">info</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">read</span><span class="p">(</span><span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">Info</span><span class="p">)[</span><span class="mi">100</span><span class="p">],</span> <span class="kt">size_t</span> <span class="n">s</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">getline</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">Line</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">s</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">equals</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">check</span><span class="p">(</span><span class="n">Puser</span> <span class="n">head</span><span class="p">,</span> <span class="n">Puser</span> <span class="o">*</span><span class="n">guestinfo</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">options</span><span class="p">)[</span><span class="mi">100</span><span class="p">]);</span>
+
+<span class="n">Puser</span> <span class="nf">initial</span><span class="p">()</span>    <span class="c1">//链表初始化</span>
+<span class="p">{</span>
+    <span class="n">Puser</span> <span class="n">pnew</span> <span class="o">=</span> <span class="p">(</span><span class="n">Puser</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">user</span><span class="p">));</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pnew</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="c1">//所有元素初始化为 0</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">pnew</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">user</span><span class="p">));</span>
+    <span class="k">return</span> <span class="n">pnew</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Puser</span> <span class="n">nodeInAddGuest</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">addguest</span><span class="p">(</span><span class="n">Puser</span> <span class="n">head</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">)[</span><span class="mi">100</span><span class="p">])</span>        <span class="c1">//添加客户</span>
+<span class="p">{</span>
+    <span class="n">Puser</span> <span class="n">pnew</span> <span class="o">=</span> <span class="n">initial</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pnew</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">//赋值</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">pnew</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">,</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="c1">//将字符串转换为整型</span>
+    <span class="n">pnew</span><span class="o">-&gt;</span><span class="n">seat_num</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">]);</span>
+    <span class="c1">//将字符串转换为浮点型</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">nodeInAddGuest</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">nodeInAddGuest</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+
+    <span class="n">nodeInAddGuest</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">pnew</span><span class="p">;</span>
+    <span class="n">nodeInAddGuest</span> <span class="o">=</span> <span class="n">nodeInAddGuest</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Puser</span> <span class="nf">createguestList</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Puser</span> <span class="n">head</span> <span class="o">=</span> <span class="n">initial</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">head</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="c1">//开头已经定义</span>
+    <span class="n">read</span><span class="p">(</span><span class="n">userhasTicket</span><span class="p">,</span> <span class="n">COLUMN</span><span class="p">,</span> <span class="n">pf</span><span class="p">);</span>
+    <span class="kt">char</span> <span class="n">splitStr</span><span class="p">[</span><span class="n">COLUMN</span><span class="p">][</span><span class="mi">100</span><span class="p">];</span><span class="c1">//只在本函数中有效</span>
+    <span class="k">while</span><span class="p">(</span> <span class="n">read</span><span class="p">(</span><span class="n">splitStr</span><span class="p">,</span> <span class="n">COLUMN</span><span class="p">,</span> <span class="n">pf</span><span class="p">)</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">)</span>
+        <span class="n">addguest</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">splitStr</span><span class="p">);</span>
+    <span class="n">nodeInAddGuest</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//表插法排序,按照座位号</span>
+<span class="kt">void</span> <span class="nf">listSort</span><span class="p">(</span><span class="n">Puser</span> <span class="n">info</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Puser</span>  <span class="n">now</span><span class="p">,</span><span class="n">pre</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">head</span><span class="p">;</span>
+	<span class="n">head</span><span class="o">=</span><span class="n">info</span><span class="p">;</span>
+	<span class="n">pre</span><span class="o">=</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">pre</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+	<span class="n">now</span><span class="o">=</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">now</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+	<span class="k">while</span><span class="p">(</span><span class="n">now</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">q</span><span class="o">=</span><span class="n">head</span><span class="p">;</span>
+            <span class="n">p</span><span class="o">=</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">p</span><span class="o">!=</span><span class="n">now</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">seat_num</span><span class="o">&lt;=</span><span class="n">now</span><span class="o">-&gt;</span><span class="n">seat_num</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">q</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+                    <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">==</span><span class="n">now</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="n">pre</span><span class="o">=</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                    <span class="n">now</span><span class="o">=</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="n">pre</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">now</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+            <span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">now</span><span class="p">;</span>
+            <span class="n">now</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">=</span><span class="n">p</span><span class="p">;</span>
+            <span class="n">now</span><span class="o">=</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">//乘客的搜索</span>
+<span class="kt">int</span> <span class="nf">check</span><span class="p">(</span><span class="n">Puser</span> <span class="n">head</span><span class="p">,</span> <span class="n">Puser</span> <span class="o">*</span><span class="n">guestinfo</span><span class="p">,</span> <span class="kt">char</span> <span class="p">(</span><span class="o">*</span><span class="n">options</span><span class="p">)[</span><span class="mi">100</span><span class="p">])</span>
+    <span class="c1">// 指针的指针（存储满足条件的航班）    //查找条件，航线</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="c1">//满足条件的个数</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">head</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">equals</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="p">{</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+                    <span class="k">continue</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">guestinfo</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">listSort</span><span class="p">(</span><span class="n">guestinfo</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">pos</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>  <span class="nf">allguest</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sum</span><span class="p">,</span><span class="n">i</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">option</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">100</span><span class="p">];</span>
+    <span class="n">Puser</span> <span class="n">s</span><span class="p">[</span><span class="mi">50</span><span class="p">];</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入航班号： &quot;</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="n">option</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">pf</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pf</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">&quot;guest_info.csv&quot;</span><span class="p">);</span>
+    <span class="n">Pairl</span> <span class="n">g</span> <span class="o">=</span> <span class="n">createguestList</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+    <span class="n">sum</span><span class="o">=</span><span class="n">check</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">option</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">sum</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;对不起，当前航班无人搭乘</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+       <span class="n">printf</span><span class="p">(</span><span class="s">&quot;航班内所有的乘客信息如下：</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;序号</span><span class="se">\t</span><span class="s"> 姓名</span><span class="se">\t</span><span class="s">    ID</span><span class="se">\t\t</span><span class="s">目的地</span><span class="se">\t</span><span class="s">航班号</span><span class="se">\t</span><span class="s">座位号</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d:&quot;</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s">%s</span><span class="se">\t</span><span class="s">%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">,</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">line_num</span><span class="p">,</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">seat_num</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ <span class="n">fclose</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
 <p>Operations.c用于各类的功能实现</p>
@@ -980,8 +1776,7 @@ int read(char (*Info)[100], size_t s, FILE *pf)
 101
 102
 103
-104
-105</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//含有main方法的.c文件</span>
+104</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//含有main方法的.c文件</span>
 <span class="cp">#include &quot;adt.h&quot;</span>
 <span class="cp">#include &lt;stdio.h&gt;</span>
 <span class="cp">#include &lt;stdlib.h&gt;</span>
@@ -1070,7 +1865,6 @@ int read(char (*Info)[100], size_t s, FILE *pf)
         <span class="k">case</span> <span class="mi">8</span><span class="o">:</span>
             <span class="p">{</span>
                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;所有的航班信息如下：</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-               <span class="c1">//printf(&quot;%s&quot;,&quot;航班号,起飞时刻,到达时刻,目的地,票价,折扣,每班载量,剩余载量\n&quot;);</span>
                <span class="n">queryp</span><span class="p">();</span>
                <span class="k">break</span><span class="p">;</span>
             <span class="p">}</span>
@@ -1101,11 +1895,8 @@ int read(char (*Info)[100], size_t s, FILE *pf)
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>上一个主题</h4>
-  <p class="topless"><a href="../index.html"
-                        title="上一章">航空售票系统</a></p>
-  <h4>下一个主题</h4>
   <p class="topless"><a href="../docs/index.html"
-                        title="下一章">&lt;no title&gt;</a></p>
+                        title="上一章">说明文档</a></p>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
     <ul class="this-page-menu">
@@ -1137,10 +1928,7 @@ int read(char (*Info)[100], size_t s, FILE *pf)
           <a href="../genindex.html" title="总目录"
              >索引</a></li>
         <li class="right" >
-          <a href="../docs/index.html" title="&lt;no title&gt;"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="../index.html" title="航空售票系统"
+          <a href="../docs/index.html" title="说明文档"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Ticket 1.0.0 文档</a> &raquo;</li> 
       </ul>

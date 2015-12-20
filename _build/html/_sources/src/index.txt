@@ -1,11 +1,12 @@
-========
+
 源代码
-========
+********
 Reader.c 用于读取文件
 
 .. literalinclude:: Reader.c
-.. code-block:: c
-    :linenos:
+    :language: c
+    :linenos:		
+
 Writer.c 用于写入文件   
 
 .. literalinclude:: Writer.c
@@ -24,9 +25,21 @@ adt.h 用于数据结构的存储
     :language: c
     :linenos:
 
- PublicInfo.h用于引入外部或全局变量   
+PublicInfo.h用于引入外部或全局变量   
 
 .. literalinclude:: PublicInfo.h
+    :language: c
+    :linenos:
+
+FlightInfo.c用于航班信息   
+
+.. literalinclude:: FlightInfo.c
+    :language: c
+    :linenos:
+
+GuestInfo.c用于客户信息  
+
+.. literalinclude:: GuestInfo.c
     :language: c
     :linenos:
 
