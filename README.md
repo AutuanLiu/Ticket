@@ -1,6 +1,7 @@
-﻿# Ticket     
+# Ticket  售票系统说明   
 
-****
+
+***
 :airplane:  :grin:
 **A system of airplane tickets Selling and Management.** 
 ---  
@@ -16,6 +17,7 @@
 > `C`语言，`markdown`文本标记语言       
 
 ---  
+  
   
 ###程序运行方法
 * 通过点击[here](https://github.com/AutuanLiu/Ticket "source code")或者访问`https://github.com/AutuanLiu/Ticket`;  
