@@ -2,6 +2,9 @@
 
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=415792881&auto=1&height=66"></iframe>
 
+<embed src="http://music.163.com/style/swf/widget.swf?sid=415792881&type=2&auto=1&width=320&height=66" width="340" height="86"  allowNetworking="all"></embed>
+
+
 ***
 :airplane:  :grin:
 **A system of airplane tickets Selling and Management.** 
